@@ -2,17 +2,23 @@ const apiBase = "https://teocavi-profilehub-bk.hf.space";
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
 const closeBtn = document.querySelector('.close-button');
+const carousel = document.getElementById('carousel');
 
-// PDF Modal open/close
+let currentIndex = 0;
+let cardsPerView = 2; // Può essere reso dinamico
+let cards = [];
+
 function openPDF(path) {
   iframe.src = path;
   modal.style.display = 'flex';
   history.pushState({ pdfOpen: true }, '', '');
 }
+
 function closeModal() {
   modal.style.display = 'none';
   iframe.src = '';
 }
+
 closeBtn.onclick = closeModal;
 window.onclick = e => { if (e.target === modal) closeModal(); };
 window.addEventListener('popstate', () => { if (modal.style.display === 'flex') closeModal(); });
@@ -20,7 +26,6 @@ window.addEventListener('popstate', () => { if (modal.style.display === 'flex') 
 async function loadPapers() {
   const res = await fetch('papers.json');
   const papers = await res.json();
-  const container = document.getElementById('carousel');
 
   for (const paper of papers) {
     let title = paper.title || '';
@@ -56,11 +61,15 @@ async function loadPapers() {
       if (paper.pdf) openPDF(paper.pdf);
       else if (paper.doi) window.open(`https://doi.org/${paper.doi}`, '_blank');
     };
-    container.appendChild(card);
+
+    carousel.appendChild(card);
   }
 
-  // Fade in animation
-  const cards = document.querySelectorAll('.paper-card');
+  cards = document.querySelectorAll('.paper-card');
+
+  // Reset index & observer
+  currentIndex = 0;
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -79,14 +88,30 @@ async function loadPapers() {
   });
 }
 
-// Scroll arrows
-const scrollAmount = 640;
-document.querySelector('.nav-arrow.left').addEventListener('click', () => {
-  document.querySelector('.carousel-frame').scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-});
-document.querySelector('.nav-arrow.right').addEventListener('click', () => {
-  document.querySelector('.carousel-frame').scrollBy({ left: scrollAmount, behavior: 'smooth' });
-});
+// SCROLL CONTINUO LOGICA
+function scrollCarousel(direction) {
+  const visible = cardsPerView;
+  const total = cards.length;
 
-// Load
-window.onload = loadPapers;
+  currentIndex += direction;
+
+  if (currentIndex > total - visible) currentIndex = 0;
+  if (currentIndex < 0) currentIndex = total - visible;
+
+  const scrollLeft = cards[currentIndex].offsetLeft;
+  carousel.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+}
+
+document.querySelector('.nav-arrow.left').addEventListener('click', () => scrollCarousel(-1));
+document.querySelector('.nav-arrow.right').addEventListener('click', () => scrollCarousel(1));
+
+window.onload = () => {
+  loadPapers();
+  const scrollBtn = document.getElementById('scrollToTopBtn');
+  window.addEventListener('scroll', () => {
+    scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  });
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+};

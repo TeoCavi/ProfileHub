@@ -1,26 +1,13 @@
-:root {
-  --bg-color: #0e1117;
-  --text-color: #f0f0f0;
-  --accent-color: #1f2937;
-  --accent-hover: #374151;
-  --card-bg: #1e1e2f;
-  --card-hover: #2a2a50;
-  --shadow: rgba(0, 0, 0, 0.15);
-  --font-main: 'Poppins', sans-serif;
-}
-
 html {
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: none;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-main);
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+  background-color: #0e1117;
+  color: #f0f0f0;
   overflow-x: hidden;
-  zoom: 1;
 }
 
 header {
@@ -34,23 +21,23 @@ header h1 {
 }
 
 header h2 {
-  font-size: 1.3em;
+  font-size: 1.4em;
   font-weight: 400;
   color: #a0a0a0;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .link-buttons {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 16px;
-  margin: 24px auto 40px;
+  margin: 20px auto 40px;
+  flex-wrap: wrap;
 }
 
 .link-buttons a {
-  background: var(--accent-color);
-  padding: 8px 18px;
+  background: #1f2937;
+  padding: 10px 18px;
   border-radius: 8px;
   text-decoration: none;
   color: white;
@@ -58,23 +45,12 @@ header h2 {
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: background-color 0.3s ease;
 }
 
 .link-buttons img.icon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
-}
-
-.link-buttons a:hover {
-  background: var(--accent-hover);
-}
-
-main {
-  padding: 40px 20px;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 .publications h3 {
@@ -85,51 +61,37 @@ main {
 
 .carousel-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-frame {
-  width: 1280px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding-bottom: 6px;
-}
-
-/* Custom scrollbar */
-.carousel-frame::-webkit-scrollbar {
-  height: 5px;
-}
-.carousel-frame::-webkit-scrollbar-track {
-  background: transparent;
-}
-.carousel-frame::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-.carousel-frame::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  padding: 0 60px;
 }
 
 .carousel-container {
   display: flex;
   gap: 40px;
-  padding: 0 10px;
-  min-width: max-content;
+  scroll-snap-type: none;
+  overflow-x: hidden; /* importante per evitare barra! */
+  padding-bottom: 10px;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .paper-card {
   flex: 0 0 600px;
   height: 780px;
-  background-color: var(--card-bg);
+  background-color: #1e1e2f;
   border-radius: 16px;
-  box-shadow: 0 6px 14px var(--shadow);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  transition: 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .paper-card .preview {
@@ -141,28 +103,28 @@ main {
 }
 
 .paper-card .info {
-  padding: 18px 20px;
+  padding: 20px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  flex-grow: 1;
 }
 
 .paper-card .info h3 {
-  font-size: 1em;
+  font-size: 1.05em;
   font-weight: 600;
   margin: 0 0 10px;
   color: #ffffff;
-  line-height: 1.45;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .paper-card .info p {
-  font-size: 0.92em;
+  font-size: 0.9em;
   color: #bbbbbb;
   margin: 4px 0;
 }
@@ -174,24 +136,35 @@ main {
   background-color: rgba(255, 255, 255, 0.08);
   border: none;
   color: white;
-  font-size: 1.8em;
-  padding: 8px 12px;
+  font-size: 2em;
+  padding: 10px;
   cursor: pointer;
   border-radius: 50%;
   z-index: 10;
-  transition: background-color 0.3s ease;
-}
-
-.arrow:hover {
-  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .arrow.left {
-  left: -30px;
+  left: 10px;
 }
 
 .arrow.right {
-  right: -30px;
+  right: 10px;
+}
+
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 14px;
+  background: #1f2937;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: 999;
 }
 
 .modal {
@@ -207,14 +180,14 @@ main {
 
 .modal-content {
   margin: 5vh auto;
-  background: var(--card-bg);
+  background: #1e1e2f;
   width: 90%;
   max-width: 900px;
   max-height: 90vh;
   border-radius: 10px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .modal-content iframe {
@@ -225,42 +198,8 @@ main {
 
 .close-button {
   color: white;
-  float: right;
+  align-self: flex-end;
   font-size: 1.5em;
   padding: 10px;
   cursor: pointer;
-}
-
-/* Responsive fix */
-@media (max-width: 1300px) {
-  .carousel-frame {
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  .paper-card {
-    flex: 0 0 85%;
-    height: auto;
-  }
-
-  .arrow {
-    font-size: 1.5em;
-    top: 45%;
-  }
-
-  header h1 {
-    font-size: 2.2em;
-  }
-
-  header h2 {
-    font-size: 1.1em;
-  }
-
-  .paper-card .info h3 {
-    font-size: 0.95em;
-  }
-
-  .paper-card .info p {
-    font-size: 0.85em;
-  }
 }
