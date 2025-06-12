@@ -14,7 +14,6 @@ body {
   font-family: var(--font-main);
   background-color: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.6;
 }
 
 header {
@@ -56,10 +55,6 @@ header h2 {
   transition: background-color 0.3s ease;
 }
 
-.link-buttons a:hover {
-  background-color: var(--accent-hover);
-}
-
 .link-buttons img.icon {
   width: 20px;
   height: 20px;
@@ -89,11 +84,6 @@ main {
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   padding: 10px 20px 40px;
-  scrollbar-width: none;
-}
-
-.carousel-container::-webkit-scrollbar {
-  display: none;
 }
 
 .paper-card {
@@ -107,21 +97,15 @@ main {
   scroll-snap-align: center;
   display: flex;
   flex-direction: row;
-  transition: all 0.3s ease;
   opacity: 0;
   transform: translateY(20px);
-}
-
-.paper-card:hover {
-  background-color: var(--card-hover);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .paper-card .preview {
   width: 40%;
   height: 100%;
   object-fit: cover;
-  background: #151521;
+  background-color: #151521;
 }
 
 .paper-card .info {
@@ -135,15 +119,14 @@ main {
 
 .paper-card .info h3 {
   font-size: 1em;
-  margin: 0;
-  line-height: 1.3;
   font-weight: 600;
+  margin: 0;
 }
 
 .paper-card .info p {
   font-size: 0.85em;
   color: #cccccc;
-  margin: 0;
+  margin: 4px 0;
 }
 
 .arrow {
@@ -157,19 +140,6 @@ main {
   padding: 10px;
   cursor: pointer;
   border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.arrow:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.arrow.left {
-  left: 10px;
-}
-
-.arrow.right {
-  right: 10px;
 }
 
 #scrollToTopBtn {
@@ -183,13 +153,6 @@ main {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-family: var(--font-main);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  display: none;
-}
-
-#scrollToTopBtn:hover {
-  background: var(--accent-hover);
 }
 
 .modal {
@@ -205,7 +168,6 @@ main {
 
 .modal-content {
   margin: 5% auto;
-  padding: 0;
   background: var(--card-bg);
   width: 90%;
   max-width: 900px;

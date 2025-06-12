@@ -34,13 +34,11 @@ async function loadPapers() {
       type: paper.type || ''
     };
 
-    // Se ha un DOI, prova a caricare i metadati dal backend
     if (paper.doi) {
       try {
         const metaRes = await fetch(`${apiBase}/metadata?doi=${paper.doi}`);
         if (metaRes.ok) {
           const apiMeta = await metaRes.json();
-          // Se un campo non è già specificato nel JSON, usa quello dall'API
           meta.title = meta.title || apiMeta.title;
           meta.journal = meta.journal || apiMeta.journal;
           meta.year = meta.year || apiMeta.year;
@@ -62,7 +60,6 @@ async function loadPapers() {
       </div>
     `;
 
-    // Comportamento al click
     card.onclick = () => {
       if (paper.pdf) {
         openPDF(paper.pdf);
@@ -73,6 +70,25 @@ async function loadPapers() {
 
     container.appendChild(card);
   }
+
+  // Animazione all'apparizione
+  const cards = document.querySelectorAll('.paper-card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = "translateY(0)";
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(card => {
+    card.style.opacity = 0;
+    card.style.transform = "translateY(20px)";
+    observer.observe(card);
+  });
 }
 
 document.querySelector('.nav-arrow.left').addEventListener('click', () => {
