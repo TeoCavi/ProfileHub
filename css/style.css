@@ -71,6 +71,8 @@ header h2 {
   scroll-snap-type: none;
   overflow-x: hidden; /* importante per evitare barra! */
   padding-bottom: 10px;
+  overflow-x: hidden;
+}
 }
 
 .carousel-container::-webkit-scrollbar {
