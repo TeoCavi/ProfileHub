@@ -1,5 +1,3 @@
-/* style.css */
-
 :root {
   --bg-color: #0e1117;
   --text-color: #f0f0f0;
@@ -8,8 +6,7 @@
   --card-bg: #1e1e2f;
   --card-hover: #2a2a50;
   --shadow: rgba(0, 0, 0, 0.2);
-  --font-main: 'Inter', sans-serif;
-  --font-title: 'Playfair Display', serif;
+  --font-main: 'Poppins', sans-serif;
 }
 
 body {
@@ -27,14 +24,12 @@ header {
 }
 
 header h1 {
-  font-family: var(--font-title);
-  font-size: 3.2em;
+  font-size: 2.8em;
   margin: 0;
-  letter-spacing: 0.5px;
 }
 
 header h2 {
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: 400;
   color: #a0a0a0;
   margin-top: 12px;
@@ -71,16 +66,15 @@ header h2 {
 }
 
 main {
-  padding: 50px 20px;
+  padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .publications h3 {
-  font-size: 2.2em;
+  font-size: 2em;
   text-align: center;
-  font-family: var(--font-title);
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .carousel-wrapper {
@@ -90,7 +84,7 @@ main {
 
 .carousel-container {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -103,17 +97,19 @@ main {
 }
 
 .paper-card {
-  flex: 0 0 85%;
-  max-width: 85%;
+  flex: 0 0 auto;
+  width: 260px;
+  height: 360px;
   background-color: var(--card-bg);
   border-radius: 16px;
   box-shadow: 0 6px 14px var(--shadow);
   overflow: hidden;
   scroll-snap-align: center;
-  color: white;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .paper-card:hover {
@@ -122,35 +118,32 @@ main {
 }
 
 .paper-card .preview {
-  width: 100%;
-  height: 240px;
-  object-fit: contain;
+  width: 40%;
+  height: 100%;
+  object-fit: cover;
   background: #151521;
-  border-bottom: 1px solid #2a2a3b;
 }
 
 .paper-card .info {
-  padding: 20px 16px;
+  width: 60%;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  justify-content: center;
+  gap: 8px;
 }
 
 .paper-card .info h3 {
-  font-size: 1rem;
-  margin: 0 0 10px;
+  font-size: 1em;
+  margin: 0;
   line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-weight: 600;
 }
 
 .paper-card .info p {
-  font-size: 0.9em;
+  font-size: 0.85em;
   color: #cccccc;
-  margin: 6px 0;
+  margin: 0;
 }
 
 .arrow {
@@ -179,6 +172,26 @@ main {
   right: 10px;
 }
 
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 14px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-main);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  display: none;
+}
+
+#scrollToTopBtn:hover {
+  background: var(--accent-hover);
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -193,7 +206,7 @@ main {
 .modal-content {
   margin: 5% auto;
   padding: 0;
-  background: #1e1e2f;
+  background: var(--card-bg);
   width: 90%;
   max-width: 900px;
   border-radius: 10px;
@@ -207,14 +220,4 @@ main {
   font-size: 1.5em;
   padding: 10px;
   cursor: pointer;
-}
-
-@media (min-width: 768px) {
-  .paper-card {
-    flex: 0 0 42%;
-    max-width: 42%;
-  }
-  .carousel-container {
-    padding: 10px 30px 40px;
-  }
 }

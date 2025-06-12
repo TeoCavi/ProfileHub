@@ -6,7 +6,7 @@
   <title>Matteo Cavicchioli | ProfileHub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -31,22 +31,25 @@
     <section class="publications">
       <h3>Scientific Publications</h3>
       <div class="carousel-wrapper">
-        <button class="arrow left nav-arrow" aria-label="Previous slide">&#10094;</button>
+        <button class="arrow left nav-arrow">&#10094;</button>
         <div class="carousel-container" id="carousel">
-          <!-- Cards dynamically generated here -->
+          <!-- Paper cards go here -->
         </div>
-        <button class="arrow right nav-arrow" aria-label="Next slide">&#10095;</button>
+        <button class="arrow right nav-arrow">&#10095;</button>
       </div>
     </section>
   </main>
 
   <div id="pdf-modal" class="modal">
     <div class="modal-content">
-      <span class="close-button" role="button">&times;</span>
+      <span class="close-button">&times;</span>
       <iframe id="pdf-frame" width="100%" height="100%" frameborder="0"></iframe>
     </div>
   </div>
 
+  <button id="scrollToTopBtn">Top</button>
+
   <script src="js/script.js"></script>
+  <script src="js/animated_cards.js"></script>
 </body>
 </html>
