@@ -1,5 +1,3 @@
-// === script.js ===
-
 const apiBase = "https://teocavi-profilehub-bk.hf.space";
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
@@ -7,7 +5,7 @@ const closeBtn = document.querySelector('.close-button');
 const scrollBtn = document.getElementById('scrollToTopBtn');
 const cardsContainer = document.querySelector('.cards');
 const infoArea = document.getElementById('test');
-const mainContainer = document.querySelector('.container');
+const player = document.querySelector('.player');
 
 let papers = [];
 let currentIndex = 0;
@@ -44,15 +42,13 @@ async function loadPapers() {
   infoArea.innerHTML = '';
 
   papers.forEach((paper, i) => {
-    const index = i + 1;
     let title = paper.title || '';
     let journal = paper.journal || '';
     let year = paper.year || '';
-    let type = paper.type || '';
     let preview = paper.preview || 'assets/previews/placeholder.png';
     let doi = paper.doi || '';
 
-    if (paper.doi && (!title || !journal || !year || !type)) {
+    if (paper.doi && (!title || !journal || !year)) {
       fetch(`${apiBase}/metadata?doi=${paper.doi}`)
         .then(metaRes => metaRes.ok ? metaRes.json() : null)
         .then(meta => {
@@ -60,7 +56,6 @@ async function loadPapers() {
             title = title || meta.title;
             journal = journal || meta.journal;
             year = year || meta.year;
-            type = type || meta.type;
             updateCard(i, title, journal, year, doi);
           }
         })
@@ -70,7 +65,7 @@ async function loadPapers() {
     const card = document.createElement('div');
     card.className = 'card';
     card.id = `song-${i}`;
-    card.innerHTML = `<img src="${preview}" alt="Paper ${index}" />`;
+    card.innerHTML = `<img src="${preview}" alt="Paper ${i + 1}" />`;
     card.addEventListener('click', () => onCardClick(i));
     cardsContainer.appendChild(card);
 
@@ -87,6 +82,8 @@ async function loadPapers() {
     infoArea.appendChild(info);
   });
 
+  attachCardHoverEffect();
+  attachDOILinksHandler();
   renderCarousel();
 }
 
@@ -100,6 +97,7 @@ function updateCard(i, title, journal, year, doi) {
       </div>
       ${doi ? `<div class="doi"><span>DOI:</span> <a href="https://doi.org/${doi}" target="_blank">${doi}</a></div>` : ''}
     `;
+    attachDOILinksHandler();
   }
 }
 
@@ -113,6 +111,10 @@ function renderCarousel() {
     card.style.zIndex = '-1';
     card.style.opacity = '0';
     card.style.pointerEvents = 'none';
+
+    // Memorizza la trasformazione base come translate + scale
+    card.dataset.baseTransform = 'translateX(0%) scale(0.8)';
+    card.style.transform = card.dataset.baseTransform;
   }
 
   const leftIndex = (currentIndex - 1 + n) % n;
@@ -120,21 +122,24 @@ function renderCarousel() {
 
   // Card centrale
   const centerCard = document.getElementById(`song-${currentIndex}`);
-  centerCard.style.transform = 'translateX(0) scale(1)';
+  centerCard.dataset.baseTransform = 'translateX(0) scale(1)';
+  centerCard.style.transform = centerCard.dataset.baseTransform;
   centerCard.style.opacity = '1';
   centerCard.style.zIndex = '2';
   centerCard.style.pointerEvents = 'auto';
 
   // Card sinistra (entra dietro)
   const leftCard = document.getElementById(`song-${leftIndex}`);
-  leftCard.style.transform = 'translateX(-40%) scale(0.8)';
+  leftCard.dataset.baseTransform = 'translateX(-40%) scale(0.8)';
+  leftCard.style.transform = leftCard.dataset.baseTransform;
   leftCard.style.opacity = '0.4';
   leftCard.style.zIndex = '1';
   leftCard.style.pointerEvents = 'auto';
 
   // Card destra (entra dietro)
   const rightCard = document.getElementById(`song-${rightIndex}`);
-  rightCard.style.transform = 'translateX(40%) scale(0.8)';
+  rightCard.dataset.baseTransform = 'translateX(40%) scale(0.8)';
+  rightCard.style.transform = rightCard.dataset.baseTransform;
   rightCard.style.opacity = '0.4';
   rightCard.style.zIndex = '1';
   rightCard.style.pointerEvents = 'auto';
@@ -149,7 +154,6 @@ function renderCarousel() {
 
   lastIndex = currentIndex;
 }
-
 
 
 function onCardClick(i) {
@@ -171,5 +175,83 @@ function onCardClick(i) {
   }
 }
 
+function attachCardHoverEffect() {
+  cardsContainer.querySelectorAll('.card').forEach(card => {
+    card.style.transformStyle = 'preserve-3d';
 
-window.onload = loadPapers;
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Calcolo rotazione
+      const rotateY = ((x - centerX) / centerX) * 15;
+      const rotateX = -((y - centerY) / centerY) * 15;
+      const base = card.dataset.baseTransform || '';
+      card.style.transform = `${base} rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+
+      // Calcolo coordinate per il riflesso (da 0% a 100%)
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
+
+      // Aggiorna variabili CSS per il riflesso
+      card.style.setProperty('--x', `${xPercent}%`);
+      card.style.setProperty('--y', `${yPercent}%`);
+
+      card.style.zIndex = card.id === `song-${currentIndex}` ? '2' : '1';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      const base = card.dataset.baseTransform || '';
+      card.style.transform = base;
+
+      // Reset posizione riflesso al centro
+      card.style.setProperty('--x', `50%`);
+      card.style.setProperty('--y', `50%`);
+
+      card.style.zIndex = card.id === `song-${currentIndex}` ? '2' : '1';
+    });
+  });
+}
+
+function attachDOILinksHandler() {
+  document.querySelectorAll('.doi a').forEach(link => {
+    link.addEventListener('click', e => e.stopPropagation());
+  });
+}
+
+// Swipe touch support
+window.onload = () => {
+  loadPapers();
+
+  let startX = 0;
+  cardsContainer.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  cardsContainer.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    const threshold = 50;
+
+    if (diff > threshold) {
+      const n = papers.length;
+      currentIndex = (currentIndex - 1 + n) % n;
+      renderCarousel();
+    } else if (diff < -threshold) {
+      const n = papers.length;
+      currentIndex = (currentIndex + 1) % n;
+      renderCarousel();
+    }
+  });
+
+  player.addEventListener('click', () => {
+    const activeCardLabel = document.getElementById(`song-${currentIndex}`);
+    if (activeCardLabel) {
+      activeCardLabel.click();
+    }
+  });
+};
+
