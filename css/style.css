@@ -44,15 +44,22 @@ header h2 {
 
 .link-buttons a {
   background: var(--accent-color);
-  padding: 12px 22px;
+  padding: 10px 20px;
   border-radius: 10px;
   text-decoration: none;
   color: white;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   transition: background-color 0.3s ease;
+  max-height: 40px;
+}
+
+.link-buttons img.icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 main {
@@ -191,6 +198,17 @@ main {
 }
 
 @media (max-width: 768px) {
+
+  .link-buttons a {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+
+  .link-buttons img.icon {
+    width: 18px;
+    height: 18px;
+  }
+
   .paper-card {
     flex: 0 0 85%;
     height: auto;
