@@ -247,5 +247,6 @@ input#item-3:checked ~ .player #song-info-3 {
 
   .player {
     margin-top: 16px;
+    width: 180vw;
   }
 }
