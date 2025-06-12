@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matteo Cavicchioli | ProfileHub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -15,21 +14,41 @@
     <h1>Matteo Cavicchioli</h1>
     <h2>Biomedical Engineer & AI Specialist</h2>
     <div class="link-buttons">
-      <a href="#"><img class="icon" src="assets/icons/linkedin.png" alt="LinkedIn" /> LinkedIn</a>
-      <a href="#"><img class="icon" src="assets/icons/github.png" alt="GitHub" /> GitHub</a>
-      <a href="#"><img class="icon" src="assets/icons/researchgate.png" alt="ResearchGate" /> ResearchGate</a>
+      <a href="https://www.linkedin.com/in/matteo-cavicchioli" target="_blank">
+        <img class="icon" src="assets/icons/linkedin.png" alt="LinkedIn" /> LinkedIn
+      </a>
+      <a href="https://github.com/TeoCavi" target="_blank">
+        <img class="icon" src="assets/icons/github.png" alt="GitHub" /> GitHub
+      </a>
+      <a href="https://www.researchgate.net/profile/Matteo-Cavicchioli" target="_blank">
+        <img class="icon" src="assets/icons/researchgate.png" alt="ResearchGate" /> ResearchGate
+      </a>
     </div>
   </header>
 
   <main>
     <section class="publications">
       <h3>Scientific Publications</h3>
-      <div class="carousel-wrapper">
-        <button class="arrow left nav-arrow">&#10094;</button>
-        <div class="carousel-frame">
-          <div class="carousel-container" id="carousel"></div>
+
+      <div class="carousel">
+        <input type="radio" name="slider" id="item-1" checked>
+        <input type="radio" name="slider" id="item-2">
+        <input type="radio" name="slider" id="item-3">
+
+        <div class="container">
+          <div class="cards"></div>
+          <div class="player">
+            <div class="upper-part">
+              <div class="play-icon">
+                <svg width="20" height="20" fill="#2992dc" stroke="#2992dc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-play" viewBox="0 0 24 24">
+                  <path d="M5 3l14 9-14 9V3z"/>
+                </svg>
+              </div>
+              <div class="info-area" id="test"></div>
+            </div>
+            <div class="progress-bar"><span class="progress"></span></div>
+          </div>
         </div>
-        <button class="arrow right nav-arrow">&#10095;</button>
       </div>
     </section>
   </main>

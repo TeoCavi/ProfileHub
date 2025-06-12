@@ -1,13 +1,14 @@
+// script.js
+
 const apiBase = "https://teocavi-profilehub-bk.hf.space";
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
 const closeBtn = document.querySelector('.close-button');
-const carousel = document.getElementById('carousel');
+const scrollBtn = document.getElementById('scrollToTopBtn');
+const cardsContainer = document.querySelector('.cards');
+const infoArea = document.getElementById('test');
 
-let currentIndex = 0;
-let cardsPerView = 2; // Può essere reso dinamico
-let cards = [];
-
+// PDF Modal
 function openPDF(path) {
   iframe.src = path;
   modal.style.display = 'flex';
@@ -20,19 +21,42 @@ function closeModal() {
 }
 
 closeBtn.onclick = closeModal;
-window.onclick = e => { if (e.target === modal) closeModal(); };
-window.addEventListener('popstate', () => { if (modal.style.display === 'flex') closeModal(); });
+window.onclick = (e) => { if (e.target === modal) closeModal(); };
+window.addEventListener('popstate', () => {
+  if (modal.style.display === 'flex') closeModal();
+});
 
+// Scroll to top
+window.addEventListener('scroll', () => {
+  scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+
+scrollBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Caricamento dinamico papers
 async function loadPapers() {
   const res = await fetch('papers.json');
   const papers = await res.json();
 
-  for (const paper of papers) {
+  cardsContainer.innerHTML = '';
+  infoArea.innerHTML = '';
+
+  const maxPapers = 3;
+  const limited = papers.slice(0, maxPapers);
+
+  for (let i = 0; i < limited.length; i++) {
+    const index = i + 1;
+    const paper = limited[i];
+
     let title = paper.title || '';
     let journal = paper.journal || '';
     let year = paper.year || '';
     let type = paper.type || '';
+    const preview = paper.preview || 'assets/previews/placeholder.png';
 
+    // Se manca qualcosa, interroga l’API DOI
     if (paper.doi) {
       try {
         const metaRes = await fetch(`${apiBase}/metadata?doi=${paper.doi}`);
@@ -48,70 +72,37 @@ async function loadPapers() {
       }
     }
 
-    const card = document.createElement('div');
-    card.className = 'paper-card';
-    card.innerHTML = `
-      <img src="${paper.preview || 'assets/previews/placeholder.png'}" class="preview" alt="Preview">
-      <div class="info">
-        <h3>${title}</h3>
-        <p><em>${journal}</em> (${year})</p>
-        <p>${type}</p>
-      </div>`;
-    card.onclick = () => {
+    // Card immagine
+    const label = document.createElement('label');
+    label.className = 'card';
+    label.setAttribute('for', `item-${index}`);
+    label.id = `song-${index}`;
+    label.innerHTML = `<img src="${preview}" alt="Paper ${index}">`;
+    label.onclick = () => {
       if (paper.pdf) openPDF(paper.pdf);
       else if (paper.doi) window.open(`https://doi.org/${paper.doi}`, '_blank');
     };
+    cardsContainer.appendChild(label);
 
-    carousel.appendChild(card);
+    // Info paper
+    const info = document.createElement('label');
+    info.className = 'song-info';
+    info.id = `song-info-${index}`;
+    info.innerHTML = `
+      <div class="title">${title}</div>
+      <div class="sub-line">
+        <div class="subtitle">${journal || type}</div>
+        <div class="time">${year}</div>
+      </div>`;
+    infoArea.appendChild(info);
   }
-
-  cards = document.querySelectorAll('.paper-card');
-
-  // Reset index & observer
-  currentIndex = 0;
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = "translateY(0)";
-        entry.target.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  cards.forEach(card => {
-    card.style.opacity = 0;
-    card.style.transform = "translateY(20px)";
-    observer.observe(card);
-  });
 }
 
-// SCROLL CONTINUO LOGICA
-function scrollCarousel(direction) {
-  const visible = cardsPerView;
-  const total = cards.length;
-
-  currentIndex += direction;
-
-  if (currentIndex > total - visible) currentIndex = 0;
-  if (currentIndex < 0) currentIndex = total - visible;
-
-  const scrollLeft = cards[currentIndex].offsetLeft;
-  carousel.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-}
-
-document.querySelector('.nav-arrow.left').addEventListener('click', () => scrollCarousel(-1));
-document.querySelector('.nav-arrow.right').addEventListener('click', () => scrollCarousel(1));
-
-window.onload = () => {
-  loadPapers();
-  const scrollBtn = document.getElementById('scrollToTopBtn');
-  window.addEventListener('scroll', () => {
-    scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+// Cambio background per effetto (facoltativo)
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.body.classList.toggle('blue');
   });
-  scrollBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-};
+});
+
+window.onload = loadPapers;
