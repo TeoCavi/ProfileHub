@@ -216,6 +216,24 @@ function attachCardHoverEffect() {
   });
 }
 
+function attachHoverEffect(selector) {
+  document.querySelectorAll(selector).forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
+      el.style.setProperty('--x', `${xPercent}%`);
+      el.style.setProperty('--y', `${yPercent}%`);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      el.style.setProperty('--x', `50%`);
+      el.style.setProperty('--y', `50%`);
+    });
+  });
+}
 function attachDOILinksHandler() {
   document.querySelectorAll('.doi a').forEach(link => {
     link.addEventListener('click', e => e.stopPropagation());
@@ -225,6 +243,8 @@ function attachDOILinksHandler() {
 // Swipe touch support
 window.onload = () => {
   loadPapers();
+  attachButtonHoverEffect('.link-buttons a');
+  attachButtonHoverEffect('.player');
 
   let startX = 0;
   cardsContainer.addEventListener('touchstart', e => {
@@ -254,4 +274,3 @@ window.onload = () => {
     }
   });
 };
-

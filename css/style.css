@@ -1,20 +1,38 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap");
 
+/* 🎨 Palette “Midnight Aurora” */
+:root {
+  --base-bg: #161a23;
+  --card-bg: #1a1d29;
+  --text-main: #f0f0f0;
+  --text-secondary: #b8b9d2;
+  --accent-teal: #47e0c0;
+  --accent-coral: #ff6b6b;
+  --indigo-shadow: rgba(102, 126, 234, 0.15);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
+html, body {
   font-family: 'Poppins', sans-serif;
-  background-color: #0e1117;
-  color: #f0f0f0;
+  background: linear-gradient(135deg, var(--base-bg), var(--card-bg));
+  color: var(--text-main);
+  max-width: 100%;
   overflow-x: hidden;
+  touch-action: manipulation;
   padding: 30px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 header {
@@ -29,9 +47,8 @@ h1 {
 h2 {
   font-weight: 400;
   font-size: 1.3em;
-  color: #a0a0a0;
+  color: var(--text-secondary);
 }
-
 
 .link-buttons {
   display: flex;
@@ -41,82 +58,113 @@ h2 {
   flex-wrap: wrap;
 }
 
-.link-buttons a {
-  padding: 12px 24px;
-  border-radius: 12px;
+.link-buttons a,
+.player {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 32px;
+  border-radius: 8px;
   text-decoration: none;
-  color: #fff;
+  color: var(--text-main);
   font-weight: 500;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-size: 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-  
-  background-color: rgba(255, 255, 255, 0.08); /* vetroso */
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  background-color: var(--card-bg);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.03), 0 4px 10px var(--indigo-shadow);
 }
 
-.link-buttons a:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px #76a9fa;
-  background-color: rgba(255, 255, 255, 0.12);
+.link-buttons a::before,
+.player::before {
+  content: "";
+  position: absolute;
+  opacity: 0;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
+  transition: opacity 0.2s ease, top 0.05s ease, left 0.05s ease;
+  z-index: 1;
+}
+
+.link-buttons a:hover::before,
+.player:hover::before {
+  opacity: 1;
+}
+
+.link-buttons a > *,
+.player > * {
+  position: relative;
+  z-index: 2;
+}
+
+.link-buttons a:hover,
+.player:hover {
+  transform: translateY(-2px);
+  background-color: #252837;
+  box-shadow: 0 6px 14px rgba(71, 224, 192, 0.25);
 }
 
 .link-buttons img.icon {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
+  transition: transform 0.2s ease;
 }
 
 .link-buttons a:hover .icon {
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
 .publications h3 {
-  font-size: 2em;
+  font-size: 2.5em;
   margin-bottom: 30px;
   text-align: center;
 }
 
 .container {
-  max-width: 640px;
   width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
 }
 
 .cards {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   position: relative;
-  width: 380px;
   height: 538px;
   margin-bottom: 20px;
 }
 
 .card {
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
   position: absolute;
-  width: 380px;
-  height: 538px;
   left: 0;
   right: 0;
   margin: auto;
-  cursor: pointer;
-  border-radius: 16px;
-  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: transform 0.3s ease;
   transform-style: preserve-3d;
 }
 
-/* immagine interna */
 .card img {
   width: 100%;
   height: 100%;
@@ -125,47 +173,27 @@ h2 {
   z-index: 1;
 }
 
-/* riflesso dinamico */
 .card::before {
   content: "";
   position: absolute;
   top: var(--y, 50%);
   left: var(--x, 50%);
   transform: translate(-50%, -50%);
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 60%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
   pointer-events: none;
-  transition: top 0.05s ease, left 0.05s ease;
-  z-index: 2;
+  transition: top 0.05s ease, left 0.05s ease, opacity 0.2s ease;
+  z-index: 3; /* sopra l’immagine, ma sotto i contenuti */
 }
-
 
 .player {
-  border-radius: 16px;
-  padding: 20px;
-  width: 500px;
-  max-width: 90vw;
-  text-align: center;
-  height: 170px;
-  overflow: hidden;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  background-color: rgba(255, 255, 255, 0.08); /* vetroso */
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  height: auto;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
 }
-
-.player:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 16px #76a9fa;
-}
-
 
 .song-info {
   display: none;
@@ -178,7 +206,7 @@ h2 {
   margin-bottom: 6px;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;       /* massimo 2 righe */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
@@ -189,7 +217,7 @@ h2 {
   align-items: center;
   gap: 6px;
   font-size: 0.95rem;
-  color: #bbb;
+  color: var(--text-secondary);
   margin-bottom: 6px;
 }
 
@@ -199,12 +227,12 @@ h2 {
 }
 
 .doi span {
-  color: white; /* DOI: in bianco */
+  color: white;
   font-weight: 500;
 }
 
 .doi a {
-  color: #76a9fa; /* colore in palette (azzurro acceso) */
+  color: var(--accent-teal);
   text-decoration: underline;
   font-weight: 500;
 }
@@ -251,8 +279,8 @@ h2 {
   bottom: 30px;
   right: 30px;
   padding: 10px 14px;
-  background: #1f2937;
-  color: white;
+  background: var(--card-bg);
+  color: var(--text-main);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -262,3 +290,21 @@ h2 {
   z-index: 999;
 }
 
+@media screen and (max-width: 768px) {
+  .cards {
+    height: calc(90vw * 1.42);
+  }
+
+  .card {
+    max-width: 90vw;
+  }
+
+  .player {
+    width: 90vw;
+    height: auto;
+  }
+
+  .song-info .title {
+    font-size: 1rem;
+  }
+}
