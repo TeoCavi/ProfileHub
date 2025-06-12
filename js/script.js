@@ -7,6 +7,7 @@ const closeBtn = document.querySelector('.close-button');
 const scrollBtn = document.getElementById('scrollToTopBtn');
 const cardsContainer = document.querySelector('.cards');
 const infoArea = document.getElementById('test');
+const sliderInputs = document.querySelectorAll('input[name="slider"]');
 
 // Modal PDF controls
 function openPDF(path) {
@@ -41,9 +42,9 @@ async function loadPapers() {
   cardsContainer.innerHTML = '';
   infoArea.innerHTML = '';
 
-  if (!Array.isArray(papers) || papers.length === 0) return;
+  const maxItems = Math.min(papers.length, 3);
 
-  for (let i = 0; i < papers.length; i++) {
+  for (let i = 0; i < maxItems; i++) {
     const paper = papers[i];
     const index = i + 1;
 
@@ -68,14 +69,6 @@ async function loadPapers() {
       }
     }
 
-    // Input for radio control
-    const input = document.createElement('input');
-    input.type = 'radio';
-    input.name = 'slider';
-    input.id = `item-${index}`;
-    if (i === 0) input.checked = true;
-    document.querySelector('.carousel').appendChild(input);
-
     // Image card
     const label = document.createElement('label');
     label.className = 'card';
@@ -83,6 +76,7 @@ async function loadPapers() {
     label.id = `song-${index}`;
     label.innerHTML = `<img src="${preview}" alt="Paper ${index}" />`;
 
+    // Only open PDF when the active (checked) input is clicked
     label.addEventListener('click', (e) => {
       const activeInput = document.getElementById(`item-${index}`);
       if (activeInput.checked) {
