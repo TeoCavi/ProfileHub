@@ -1,8 +1,9 @@
-/* Base Reset */
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap");
+
 * {
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 body {
@@ -10,46 +11,51 @@ body {
   background-color: #0e1117;
   color: #f0f0f0;
   overflow-x: hidden;
-  text-align: center;
   padding: 30px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Header */
-header h1 {
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h1 {
   font-size: 2.8em;
-  margin: 0;
 }
 
-header h2 {
-  font-size: 1.2em;
+h2 {
   font-weight: 400;
+  font-size: 1.3em;
   color: #a0a0a0;
-  margin: 10px 0 20px;
 }
 
 .link-buttons {
   display: flex;
   justify-content: center;
   gap: 16px;
+  margin-top: 20px;
   flex-wrap: wrap;
-  margin-bottom: 40px;
 }
 
 .link-buttons a {
   background: #1f2937;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 8px;
-  color: white;
   text-decoration: none;
+  color: #fff;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.link-buttons .icon {
+.link-buttons img.icon {
   width: 20px;
   height: 20px;
+  object-fit: contain;
   transition: transform 0.2s ease;
 }
 
@@ -57,131 +63,132 @@ header h2 {
   transform: scale(1.2);
 }
 
-/* Publications Section */
 .publications h3 {
   font-size: 2em;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-/* Carousel Container */
 .container {
-  width: 100%;
   max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-  height: 650px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Carousel Logic */
-input[type="radio"] {
+input[type=radio] {
   display: none;
 }
 
 .cards {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 480px;
+  max-width: 500px;
   margin-bottom: 20px;
 }
 
 .card {
   position: absolute;
-  width: 50%;
+  width: 60%;
   height: 100%;
   left: 0;
   right: 0;
   margin: auto;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: transform .4s ease;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 16px;
   overflow: hidden;
-  background-color: white;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
 }
 
 .card img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-}
-
-/* Positioning */
-#item-1:checked ~ .cards #song-1,
-#item-2:checked ~ .cards #song-2,
-#item-3:checked ~ .cards #song-3 {
-  transform: translateX(0) scale(1);
-  z-index: 2;
-}
-
-#item-1:checked ~ .cards #song-2,
-#item-2:checked ~ .cards #song-3,
-#item-3:checked ~ .cards #song-1 {
-  transform: translateX(40%) scale(0.8);
-  opacity: 0.5;
-  z-index: 1;
+  object-fit: cover;
+  border-radius: 16px;
 }
 
 #item-1:checked ~ .cards #song-3,
 #item-2:checked ~ .cards #song-1,
 #item-3:checked ~ .cards #song-2 {
-  transform: translateX(-40%) scale(0.8);
-  opacity: 0.5;
+  transform: translateX(-40%) scale(.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+#item-1:checked ~ .cards #song-2,
+#item-2:checked ~ .cards #song-3,
+#item-3:checked ~ .cards #song-1 {
+  transform: translateX(40%) scale(.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+#item-1:checked ~ .cards #song-1,
+#item-2:checked ~ .cards #song-2,
+#item-3:checked ~ .cards #song-3 {
+  transform: translateX(0) scale(1);
+  opacity: 1;
   z-index: 1;
 }
 
-/* Info Display */
-.paper-info-area {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.paper-info {
-  display: none;
+.player {
   background-color: #1e1e2f;
+  border-radius: 12px;
   padding: 20px;
-  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-#item-1:checked ~ .paper-info-area #paper-info-1,
-#item-2:checked ~ .paper-info-area #paper-info-2,
-#item-3:checked ~ .paper-info-area #paper-info-3 {
+.song-info {
+  display: none;
+}
+
+input#item-1:checked ~ .player #song-info-1,
+input#item-2:checked ~ .player #song-info-2,
+input#item-3:checked ~ .player #song-info-3 {
   display: block;
 }
 
-.paper-title {
-  font-size: 1.2em;
+.song-info .title {
   font-weight: 600;
+  font-size: 1.1rem;
   color: white;
+  margin-bottom: 6px;
 }
 
-.paper-meta {
-  font-size: 0.9em;
-  color: #ccc;
-  margin-top: 5px;
+.sub-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #bbb;
 }
 
-/* Modal PDF */
 .modal {
   display: none;
   position: fixed;
-  top: 0;
+  z-index: 1000;
   left: 0;
-  z-index: 100;
+  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.8);
 }
 
 .modal-content {
-  width: 90%;
-  max-width: 900px;
-  height: 90%;
   margin: 5vh auto;
   background: #1e1e2f;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
   border-radius: 10px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .modal-content iframe {
@@ -191,14 +198,13 @@ input[type="radio"] {
 }
 
 .close-button {
-  font-size: 1.5em;
   color: white;
   align-self: flex-end;
+  font-size: 1.5em;
   padding: 10px;
   cursor: pointer;
 }
 
-/* Scroll To Top */
 #scrollToTopBtn {
   position: fixed;
   bottom: 30px;
@@ -208,7 +214,9 @@ input[type="radio"] {
   color: white;
   border: none;
   border-radius: 6px;
-  font-weight: 600;
   cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   display: none;
+  z-index: 999;
 }
