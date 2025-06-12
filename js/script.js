@@ -7,7 +7,7 @@ const closeBtn = document.querySelector('.close-button');
 const scrollBtn = document.getElementById('scrollToTopBtn');
 const cardsContainer = document.querySelector('.cards');
 const infoArea = document.getElementById('test');
-const sliderInputs = document.querySelectorAll('input[name="slider"]');
+const mainContainer = document.querySelector('.container');
 
 // Modal PDF controls
 function openPDF(path) {
@@ -42,10 +42,10 @@ async function loadPapers() {
   cardsContainer.innerHTML = '';
   infoArea.innerHTML = '';
 
-  const maxItems = Math.min(papers.length, 3);
+  // Remove existing radio inputs if any
+  document.querySelectorAll('input[name="slider"]').forEach(el => el.remove());
 
-  for (let i = 0; i < maxItems; i++) {
-    const paper = papers[i];
+  papers.forEach((paper, i) => {
     const index = i + 1;
 
     let title = paper.title || '';
@@ -53,21 +53,30 @@ async function loadPapers() {
     let year = paper.year || '';
     let type = paper.type || '';
     let preview = paper.preview || 'assets/previews/placeholder.png';
+    let doi = paper.doi || '';
 
     if (paper.doi && (!title || !journal || !year || !type)) {
-      try {
-        const metaRes = await fetch(`${apiBase}/metadata?doi=${paper.doi}`);
-        if (metaRes.ok) {
-          const meta = await metaRes.json();
-          title = title || meta.title;
-          journal = journal || meta.journal;
-          year = year || meta.year;
-          type = type || meta.type;
-        }
-      } catch (err) {
-        console.warn(`Errore fetch DOI ${paper.doi}:`, err);
-      }
+      fetch(`${apiBase}/metadata?doi=${paper.doi}`)
+        .then(metaRes => metaRes.ok ? metaRes.json() : null)
+        .then(meta => {
+          if (meta) {
+            title = title || meta.title;
+            journal = journal || meta.journal;
+            year = year || meta.year;
+            type = type || meta.type;
+            updateCard(index, title, journal, year, doi);
+          }
+        })
+        .catch(err => console.warn(`Errore fetch DOI ${paper.doi}:`, err));
     }
+
+    // Radio input
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'slider';
+    input.id = `item-${index}`;
+    if (index === 1) input.checked = true;
+    mainContainer.insertBefore(input, cardsContainer);
 
     // Image card
     const label = document.createElement('label');
@@ -76,8 +85,7 @@ async function loadPapers() {
     label.id = `song-${index}`;
     label.innerHTML = `<img src="${preview}" alt="Paper ${index}" />`;
 
-    // Only open PDF when the active (checked) input is clicked
-    label.addEventListener('click', (e) => {
+    label.addEventListener('click', () => {
       const activeInput = document.getElementById(`item-${index}`);
       if (activeInput.checked) {
         if (paper.pdf) openPDF(paper.pdf);
@@ -95,10 +103,25 @@ async function loadPapers() {
       <div class="title">${title}</div>
       <div class="sub-line">
         <div class="subtitle"><em>${journal}</em></div>
-        <div class="time">${year}</div>
+        <div class="time">(${year})</div>
       </div>
+      ${doi ? `<div class="doi"><a href="https://doi.org/${doi}" target="_blank">DOI: ${doi}</a></div>` : ''}
     `;
     infoArea.appendChild(info);
+  });
+}
+
+function updateCard(index, title, journal, year, doi) {
+  const info = document.getElementById(`song-info-${index}`);
+  if (info) {
+    info.innerHTML = `
+      <div class="title">${title}</div>
+      <div class="sub-line">
+        <div class="subtitle"><em>${journal}</em></div>
+        <div class="time">(${year})</div>
+      </div>
+      ${doi ? `<div class="doi"><a href="https://doi.org/${doi}" target="_blank">DOI: ${doi}</a></div>` : ''}
+    `;
   }
 }
 
