@@ -1,11 +1,9 @@
 const apiBase = "https://teocavi-profilehub-bk.hf.space";
-
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
 const closeBtn = document.querySelector('.close-button');
-const topBtn = document.getElementById('scrollToTopBtn');
 
-// Apri PDF nel modal e aggiorna cronologia per tasto indietro
+// Apri PDF e aggiungi entry nella cronologia
 function openPDF(path) {
   iframe.src = path;
   modal.style.display = 'flex';
@@ -18,90 +16,66 @@ function closeModal() {
   iframe.src = '';
 }
 
-// Gestione chiusura dal bottone o clic esterno
+// Gestione chiusura
 closeBtn.onclick = closeModal;
-window.onclick = (e) => {
-  if (e.target === modal) closeModal();
-};
+window.onclick = e => { if (e.target === modal) closeModal(); };
+window.addEventListener('popstate', () => { if (modal.style.display === 'flex') closeModal(); });
 
-// Tasto indietro chiude il modal (mobile-friendly)
-window.addEventListener('popstate', (e) => {
-  if (modal.style.display === 'flex') closeModal();
-});
-
-// Scroll to top button
-window.onscroll = function () {
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-    topBtn.style.display = 'block';
-  } else {
-    topBtn.style.display = 'none';
-  }
-};
-topBtn.onclick = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-// Caricamento e generazione card
 async function loadPapers() {
-  const response = await fetch('papers.json');
-  const papers = await response.json();
+  const res = await fetch('papers.json');
+  const papers = await res.json();
   const container = document.getElementById('carousel');
 
   for (const paper of papers) {
-    let meta = {
-      title: paper.title || '',
-      journal: paper.journal || '',
-      year: paper.year || '',
-      type: paper.type || ''
-    };
+    // Dati iniziali da JSON
+    let title = paper.title || '';
+    let journal = paper.journal || '';
+    let year = paper.year || '';
+    let type = paper.type || '';
 
-    // Recupero metadati dal backend se presente DOI
+    // Se c'è DOI, recupera metadati dall'API
     if (paper.doi) {
       try {
         const metaRes = await fetch(`${apiBase}/metadata?doi=${paper.doi}`);
         if (metaRes.ok) {
-          const apiMeta = await metaRes.json();
-          meta.title = meta.title || apiMeta.title;
-          meta.journal = meta.journal || apiMeta.journal;
-          meta.year = meta.year || apiMeta.year;
-          meta.type = meta.type || apiMeta.type;
+          const meta = await metaRes.json();
+          title = title || meta.title;
+          journal = journal || meta.journal;
+          year = year || meta.year;
+          type = type || meta.type;
         }
-      } catch (e) {
-        console.warn("Errore nel recupero metadati per DOI:", paper.doi);
+      } catch (err) {
+        console.warn(`Errore fetch API DOI ${paper.doi}:`, err);
       }
     }
 
+    // Crea la card
     const card = document.createElement('div');
     card.className = 'paper-card';
     card.innerHTML = `
       <img src="${paper.preview || 'assets/previews/placeholder.png'}" class="preview" alt="Preview">
       <div class="info">
-        <h3>${meta.title}</h3>
-        <p><em>${meta.journal}</em> (${meta.year})</p>
-        <p>${meta.type}</p>
-      </div>
-    `;
-
-    // Azione al click sulla card
+        <h3>${title}</h3>
+        <p><em>${journal}</em> (${year})</p>
+        <p>${type}</p>
+      </div>`;
+    // Click card -> PDF o DOI
     card.onclick = () => {
-      if (paper.pdf) {
-        openPDF(paper.pdf);
-      } else if (paper.doi) {
-        window.open('https://doi.org/' + paper.doi, '_blank');
-      }
+      if (paper.pdf) openPDF(paper.pdf);
+      else if (paper.doi) window.open(`https://doi.org/${paper.doi}`, '_blank');
     };
 
     container.appendChild(card);
   }
 
-  // Animazione all'apparizione
+  // Animazione entra
   const cards = document.querySelectorAll('.paper-card');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.transition = "opacity 0.6s ease, transform 0.6s ease";
         entry.target.style.opacity = 1;
         entry.target.style.transform = "translateY(0)";
+        entry.target.style.transition = "opacity 0.6s ease, transform 0.6s ease";
         observer.unobserve(entry.target);
       }
     });
@@ -114,14 +88,14 @@ async function loadPapers() {
   });
 }
 
-// Carosello scroll
+// Scroll del carosello (600px larghezza + 40px gap)
+const scrollAmount = 640;
 document.querySelector('.nav-arrow.left').addEventListener('click', () => {
-  document.getElementById('carousel').scrollBy({ left: -500, behavior: 'smooth' });
+  document.getElementById('carousel').scrollBy({ left: -scrollAmount, behavior: 'smooth' });
 });
-
 document.querySelector('.nav-arrow.right').addEventListener('click', () => {
-  document.getElementById('carousel').scrollBy({ left: 500, behavior: 'smooth' });
+  document.getElementById('carousel').scrollBy({ left: scrollAmount, behavior: 'smooth' });
 });
 
-// Avvio
+// Inizializzazione
 window.onload = loadPapers;

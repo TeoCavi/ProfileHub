@@ -55,18 +55,9 @@ header h2 {
   transition: background-color 0.3s ease;
 }
 
-.link-buttons a:hover {
-  background-color: var(--accent-hover);
-}
-
-.link-buttons img.icon {
-  width: 20px;
-  height: 20px;
-}
-
 main {
   padding: 40px 20px;
-  max-width: 1300px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 
@@ -78,6 +69,7 @@ main {
 
 .carousel-wrapper {
   position: relative;
+  padding: 0 80px;
   overflow: hidden;
 }
 
@@ -87,7 +79,6 @@ main {
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding: 20px 80px;
   scrollbar-width: none;
 }
 
@@ -96,23 +87,17 @@ main {
 }
 
 .paper-card {
-  flex: 0 0 calc(50% - 40px);
-  max-width: calc(50% - 40px);
-  height: 480px;
+  flex: 0 0 600px;
+  max-width: 600px;
+  height: 800px;
   background-color: var(--card-bg);
   border-radius: 16px;
+  margin: 0 0;
   box-shadow: 0 6px 14px var(--shadow);
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.paper-card:hover {
-  background-color: var(--card-hover);
+  transition: 0.3s ease;
 }
 
 .paper-card .preview {
@@ -124,7 +109,7 @@ main {
 }
 
 .paper-card .info {
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -149,42 +134,22 @@ main {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.4);
   border: none;
   color: white;
   font-size: 2em;
   padding: 10px;
   cursor: pointer;
   border-radius: 50%;
-  transition: background-color 0.3s;
-  z-index: 5;
+  z-index: 10;
 }
 
 .arrow.left {
-  left: 10px;
+  left: 20px;
 }
 
 .arrow.right {
-  right: 10px;
-}
-
-.arrow:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-#scrollToTopBtn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 10px 14px;
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  display: none;
+  right: 20px;
 }
 
 .modal {
@@ -204,7 +169,6 @@ main {
   width: 90%;
   max-width: 900px;
   max-height: 90vh;
-  height: auto;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -227,36 +191,26 @@ main {
 }
 
 @media (max-width: 768px) {
+  .paper-card {
+    flex: 0 0 85%;
+    height: auto;
+  }
+
+  .carousel-wrapper {
+    padding: 0 20px;
+  }
+
+  .arrow {
+    top: 40%;
+    font-size: 1.5em;
+    padding: 8px;
+  }
+
   header h1 {
     font-size: 2em;
   }
 
   .publications h3 {
     font-size: 1.6em;
-  }
-
-  .paper-card {
-    flex: 0 0 90%;
-    max-width: 90%;
-    height: auto;
-  }
-
-  .paper-card .info h3 {
-    font-size: 0.95em;
-  }
-
-  .paper-card .info p {
-    font-size: 0.8em;
-  }
-
-  .carousel-container {
-    padding: 10px 20px;
-    gap: 20px;
-  }
-
-  .arrow {
-    font-size: 1.6em;
-    padding: 8px;
-    top: 40%;
   }
 }
