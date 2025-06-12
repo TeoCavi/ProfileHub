@@ -78,12 +78,11 @@ async function loadPapers() {
     info.className = 'song-info';
     info.id = `song-info-${i}`;
     info.innerHTML = `
-      <div class="title">${title || 'Untitled'}</div>
+      <div class="title">${title}</div>
       <div class="sub-line">
-        <div class="subtitle"><em>${journal || 'Unknown Journal'}</em></div>
-        <div class="time">(${year || 'N/A'})</div>
+        <span><em>${journal}</em> (${year})</span>
       </div>
-      ${doi ? `<div class="doi"><a href="https://doi.org/${doi}" target="_blank">DOI: ${doi}</a></div>` : ''}
+      ${doi ? `<div class="doi"><span>DOI:</span> <a href="https://doi.org/${doi}" target="_blank">${doi}</a></div>` : ''}
     `;
     infoArea.appendChild(info);
   });
@@ -97,10 +96,9 @@ function updateCard(i, title, journal, year, doi) {
     info.innerHTML = `
       <div class="title">${title}</div>
       <div class="sub-line">
-        <div class="subtitle"><em>${journal}</em></div>
-        <div class="time">(${year})</div>
+        <span><em>${journal}</em> (${year})</span>
       </div>
-      ${doi ? `<div class="doi"><a href="https://doi.org/${doi}" target="_blank">DOI: ${doi}</a></div>` : ''}
+      ${doi ? `<div class="doi"><span>DOI:</span> <a href="https://doi.org/${doi}" target="_blank">${doi}</a></div>` : ''}
     `;
   }
 }

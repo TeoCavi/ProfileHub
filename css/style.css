@@ -115,6 +115,11 @@ h2 {
   text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   margin-top: 16px;
+  height: 170px; /* FISSA l'altezza del player */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .song-info {
@@ -124,27 +129,39 @@ h2 {
 
 .song-info .title {
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   margin-bottom: 6px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* massimo 2 righe */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 
 .sub-line {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  font-size: 0.70rem;
+  gap: 6px;
+  font-size: 0.95rem;
   color: #bbb;
   margin-bottom: 6px;
 }
 
 .doi {
-  font-size: 0.70rem;
+  font-size: 0.9rem;
   color: white;
 }
 
+.doi span {
+  color: white; /* DOI: in bianco */
+  font-weight: 500;
+}
+
 .doi a {
-  color: #76a9fa;
+  color: #76a9fa; /* colore in palette (azzurro acceso) */
   text-decoration: underline;
+  font-weight: 500;
 }
 
 .modal {
@@ -200,13 +217,3 @@ h2 {
   z-index: 999;
 }
 
-@media (max-width: 768px) {
-  .cards, .card, .player {
-    width: 90vw;
-    height: auto;
-  }
-
-  .player {
-    margin-top: 16px;
-  }
-}
