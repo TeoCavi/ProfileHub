@@ -1,14 +1,11 @@
-// script.js
-
 const apiBase = "https://teocavi-profilehub-bk.hf.space";
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
 const closeBtn = document.querySelector('.close-button');
 const scrollBtn = document.getElementById('scrollToTopBtn');
-const cardsContainer = document.querySelector('.cards');
+const cardsContainer = document.getElementById('carousel');
 const infoArea = document.getElementById('test');
 
-// PDF Modal
 function openPDF(path) {
   iframe.src = path;
   modal.style.display = 'flex';
@@ -21,21 +18,18 @@ function closeModal() {
 }
 
 closeBtn.onclick = closeModal;
-window.onclick = (e) => { if (e.target === modal) closeModal(); };
+window.onclick = e => { if (e.target === modal) closeModal(); };
 window.addEventListener('popstate', () => {
   if (modal.style.display === 'flex') closeModal();
-});
-
-// Scroll to top
-window.addEventListener('scroll', () => {
-  scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
 });
 
 scrollBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+window.addEventListener('scroll', () => {
+  scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
 
-// Caricamento dinamico papers
 async function loadPapers() {
   const res = await fetch('papers.json');
   const papers = await res.json();
@@ -43,12 +37,9 @@ async function loadPapers() {
   cardsContainer.innerHTML = '';
   infoArea.innerHTML = '';
 
-  const maxPapers = 3;
-  const limited = papers.slice(0, maxPapers);
-
-  for (let i = 0; i < limited.length; i++) {
+  for (let i = 0; i < Math.min(3, papers.length); i++) {
+    const paper = papers[i];
     const index = i + 1;
-    const paper = limited[i];
 
     let title = paper.title || '';
     let journal = paper.journal || '';
@@ -56,7 +47,6 @@ async function loadPapers() {
     let type = paper.type || '';
     const preview = paper.preview || 'assets/previews/placeholder.png';
 
-    // Se manca qualcosa, interroga l’API DOI
     if (paper.doi) {
       try {
         const metaRes = await fetch(`${apiBase}/metadata?doi=${paper.doi}`);
@@ -72,37 +62,31 @@ async function loadPapers() {
       }
     }
 
-    // Card immagine
     const label = document.createElement('label');
     label.className = 'card';
     label.setAttribute('for', `item-${index}`);
     label.id = `song-${index}`;
-    label.innerHTML = `<img src="${preview}" alt="Paper ${index}">`;
+    label.innerHTML = `<img src="${preview}" alt="Paper ${index}" />`;
     label.onclick = () => {
-      if (paper.pdf) openPDF(paper.pdf);
-      else if (paper.doi) window.open(`https://doi.org/${paper.doi}`, '_blank');
+      const selected = document.querySelector('input[name="slider"]:checked');
+      if (selected && selected.id === `item-${index}`) {
+        if (paper.pdf) openPDF(paper.pdf);
+        else if (paper.doi) window.open(`https://doi.org/${paper.doi}`, '_blank');
+      } else {
+        document.getElementById(`item-${index}`).checked = true;
+      }
     };
     cardsContainer.appendChild(label);
 
-    // Info paper
-    const info = document.createElement('label');
-    info.className = 'song-info';
-    info.id = `song-info-${index}`;
+    const info = document.createElement('div');
+    info.className = 'paper-info';
+    info.id = `paper-info-${index}`;
     info.innerHTML = `
-      <div class="title">${title}</div>
-      <div class="sub-line">
-        <div class="subtitle">${journal || type}</div>
-        <div class="time">${year}</div>
-      </div>`;
+      <div class="paper-title">${title}</div>
+      <div class="paper-meta"><em>${journal}</em> (${year})</div>
+    `;
     infoArea.appendChild(info);
   }
 }
-
-// Cambio background per effetto (facoltativo)
-document.querySelectorAll('input[type="radio"]').forEach(radio => {
-  radio.addEventListener('change', () => {
-    document.body.classList.toggle('blue');
-  });
-});
 
 window.onload = loadPapers;
