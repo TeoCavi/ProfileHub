@@ -64,7 +64,7 @@ header h2 {
 
 main {
   padding: 40px 20px;
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -76,21 +76,22 @@ main {
 
 .carousel-wrapper {
   position: relative;
-  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-frame {
+  width: 1280px; /* 2 cards (600px + 40px gap) + padding */
   overflow: hidden;
 }
 
 .carousel-container {
   display: flex;
   gap: 40px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.carousel-container::-webkit-scrollbar {
-  display: none;
+  scroll-behavior: smooth;
+  padding: 0 10px;
 }
 
 .paper-card {
@@ -99,12 +100,11 @@ main {
   height: 800px;
   background-color: var(--card-bg);
   border-radius: 16px;
-  margin: 0 0;
   box-shadow: 0 6px 14px var(--shadow);
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  transition: 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .paper-card .preview {
@@ -152,11 +152,27 @@ main {
 }
 
 .arrow.left {
-  left: 20px;
+  left: 0;
 }
 
 .arrow.right {
-  right: 20px;
+  right: 0;
+}
+
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 14px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: 999;
 }
 
 .modal {
@@ -180,7 +196,6 @@ main {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-sizing: border-box;
 }
 
 .modal-content iframe {
@@ -197,29 +212,19 @@ main {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-
-  .link-buttons a {
-    font-size: 0.9em;
-    padding: 8px 16px;
-  }
-
-  .link-buttons img.icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .paper-card {
-    flex: 0 0 85%;
-    height: auto;
-  }
-
-  .carousel-wrapper {
+@media (max-width: 1300px) {
+  .carousel-frame {
+    width: 100%;
     padding: 0 20px;
   }
 
+  .paper-card {
+    flex: 0 0 90%;
+    height: auto;
+  }
+
   .arrow {
-    top: 40%;
+    top: 45%;
     font-size: 1.5em;
     padding: 8px;
   }
