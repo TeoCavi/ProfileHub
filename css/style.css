@@ -1,0 +1,183 @@
+/* style.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0e1117;
+  color: #f0f0f0;
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background-color: #0e1117;
+  color: white;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.8em;
+}
+
+header h2 {
+  margin: 10px 0;
+  font-weight: 400;
+  font-size: 1.3em;
+  color: #a0a0a0;
+}
+
+.link-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 20px auto 40px;
+}
+
+.link-buttons a {
+  background: #1f2937;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link-buttons a:hover {
+  background: #374151;
+}
+
+.link-buttons img.icon {
+  width: 20px;
+  height: 20px;
+}
+
+main {
+  padding: 60px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.publications h3 {
+  font-size: 2em;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 0 40px;
+}
+
+.carousel-container {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 10px 20px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.paper-card {
+  flex: 0 0 42%;
+  max-width: 42%;
+  background-color: #1e1e2f;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  overflow: hidden;
+  scroll-snap-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 580px;
+}
+
+.paper-card:hover {
+  background-color: #2a2a50;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.paper-card .preview {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  border-bottom: 1px solid #2a2a3b;
+}
+
+.paper-card .info {
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex-grow: 1;
+}
+
+.paper-card .info h3 {
+  font-size: 1rem;
+  margin: 0 0 10px;
+  line-height: 1.3;
+  height: 2.6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* mostra max 2 righe */
+  -webkit-box-orient: vertical;
+}
+
+.paper-card .info p {
+  margin: 4px 0;
+  font-size: 0.92em;
+  color: #dddddd;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: white;
+  font-size: 2em;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.arrow.left {
+  left: 5px;
+}
+
+.arrow.right {
+  right: 5px;
+}
+
+.section {
+  padding: 60px 20px;
+  border-top: 1px solid #2a2a3b;
+  margin-top: 60px;
+}
+
+.section h3 {
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  color: #ffffff;
+  text-align: center;
+}

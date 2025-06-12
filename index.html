@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matteo Cavicchioli | ProfileHub</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Matteo Cavicchioli</h1>
+    <h2>Biomedical Engineer & AI Specialist</h2>
+    <div class="link-buttons">
+      <a href="https://www.linkedin.com/in/matteo-cavicchioli" target="_blank">
+        <img class="icon" src="assets/icons/linkedin.png" alt="LinkedIn" /> LinkedIn
+      </a>
+      <a href="https://github.com/TeoCavi" target="_blank">
+        <img class="icon" src="assets/icons/github.png" alt="GitHub" /> GitHub
+      </a>
+      <a href="https://www.researchgate.net/profile/Matteo-Cavicchioli" target="_blank">
+        <img class="icon" src="assets/icons/researchgate.png" alt="ResearchGate" /> ResearchGate
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="publications">
+      <h3>Scientific Publications</h3>
+      <div class="carousel-wrapper">
+        <button class="arrow left nav-arrow">&#10094;</button>
+        <div class="carousel-container" id="carousel">
+          <!-- Cards dynamically generated here -->
+        </div>
+        <button class="arrow right nav-arrow">&#10095;</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- PDF Modal -->
+  <div id="pdf-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <iframe id="pdf-frame" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
