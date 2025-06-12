@@ -3,26 +3,45 @@ const apiBase = "https://teocavi-profilehub-bk.hf.space";
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
 const closeBtn = document.querySelector('.close-button');
+const topBtn = document.getElementById('scrollToTopBtn');
 
-// Modal close behavior
-closeBtn.onclick = () => {
-  modal.style.display = 'none';
-  iframe.src = '';
-};
-
-window.onclick = (e) => {
-  if (e.target === modal) {
-    modal.style.display = 'none';
-    iframe.src = '';
-  }
-};
-
+// Apri PDF nel modal e aggiorna cronologia per tasto indietro
 function openPDF(path) {
   iframe.src = path;
   modal.style.display = 'flex';
+  history.pushState({ pdfOpen: true }, '', '');
 }
 
-// Load papers
+// Chiudi modal
+function closeModal() {
+  modal.style.display = 'none';
+  iframe.src = '';
+}
+
+// Gestione chiusura dal bottone o clic esterno
+closeBtn.onclick = closeModal;
+window.onclick = (e) => {
+  if (e.target === modal) closeModal();
+};
+
+// Tasto indietro chiude il modal (mobile-friendly)
+window.addEventListener('popstate', (e) => {
+  if (modal.style.display === 'flex') closeModal();
+});
+
+// Scroll to top button
+window.onscroll = function () {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    topBtn.style.display = 'block';
+  } else {
+    topBtn.style.display = 'none';
+  }
+};
+topBtn.onclick = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Caricamento e generazione card
 async function loadPapers() {
   const response = await fetch('papers.json');
   const papers = await response.json();
@@ -36,6 +55,7 @@ async function loadPapers() {
       type: paper.type || ''
     };
 
+    // Recupero metadati dal backend se presente DOI
     if (paper.doi) {
       try {
         const metaRes = await fetch(`${apiBase}/metadata?doi=${paper.doi}`);
@@ -62,6 +82,7 @@ async function loadPapers() {
       </div>
     `;
 
+    // Azione al click sulla card
     card.onclick = () => {
       if (paper.pdf) {
         openPDF(paper.pdf);
@@ -73,7 +94,7 @@ async function loadPapers() {
     container.appendChild(card);
   }
 
-  // Animate on appear
+  // Animazione all'apparizione
   const cards = document.querySelectorAll('.paper-card');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -93,27 +114,14 @@ async function loadPapers() {
   });
 }
 
-// Carousel scroll buttons
+// Carosello scroll
 document.querySelector('.nav-arrow.left').addEventListener('click', () => {
-  document.getElementById('carousel').scrollBy({ left: -400, behavior: 'smooth' });
+  document.getElementById('carousel').scrollBy({ left: -500, behavior: 'smooth' });
 });
 
 document.querySelector('.nav-arrow.right').addEventListener('click', () => {
-  document.getElementById('carousel').scrollBy({ left: 400, behavior: 'smooth' });
+  document.getElementById('carousel').scrollBy({ left: 500, behavior: 'smooth' });
 });
 
-// Scroll to top button
-const topBtn = document.getElementById('scrollToTopBtn');
-window.onscroll = function () {
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-    topBtn.style.display = 'block';
-  } else {
-    topBtn.style.display = 'none';
-  }
-};
-topBtn.onclick = function () {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-// Init
+// Avvio
 window.onload = loadPapers;
