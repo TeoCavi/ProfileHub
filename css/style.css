@@ -5,8 +5,13 @@
   --accent-hover: #374151;
   --card-bg: #1e1e2f;
   --card-hover: #2a2a50;
-  --shadow: rgba(0, 0, 0, 0.2);
+  --shadow: rgba(0, 0, 0, 0.15);
   --font-main: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: none;
 }
 
 body {
@@ -15,6 +20,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
+  zoom: 1;
 }
 
 header {
@@ -23,12 +29,12 @@ header {
 }
 
 header h1 {
-  font-size: 3.6em;
+  font-size: 3em;
   margin: 0;
 }
 
 header h2 {
-  font-size: 1.6em;
+  font-size: 1.3em;
   font-weight: 400;
   color: #a0a0a0;
   margin-top: 12px;
@@ -44,22 +50,25 @@ header h2 {
 
 .link-buttons a {
   background: var(--accent-color);
-  padding: 10px 20px;
-  border-radius: 10px;
+  padding: 8px 18px;
+  border-radius: 8px;
   text-decoration: none;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 8px;
   transition: background-color 0.3s ease;
-  max-height: 40px;
 }
 
 .link-buttons img.icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
+}
+
+.link-buttons a:hover {
+  background: var(--accent-hover);
 }
 
 main {
@@ -69,7 +78,7 @@ main {
 }
 
 .publications h3 {
-  font-size: 2.4em;
+  font-size: 2em;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -86,6 +95,22 @@ main {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+  padding-bottom: 6px;
+}
+
+/* Custom scrollbar */
+.carousel-frame::-webkit-scrollbar {
+  height: 5px;
+}
+.carousel-frame::-webkit-scrollbar-track {
+  background: transparent;
+}
+.carousel-frame::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.carousel-frame::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .carousel-container {
@@ -97,15 +122,14 @@ main {
 
 .paper-card {
   flex: 0 0 600px;
-  max-width: 600px;
-  height: 800px;
+  height: 780px;
   background-color: var(--card-bg);
   border-radius: 16px;
   box-shadow: 0 6px 14px var(--shadow);
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .paper-card .preview {
@@ -117,7 +141,7 @@ main {
 }
 
 .paper-card .info {
-  padding: 20px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -125,15 +149,20 @@ main {
 }
 
 .paper-card .info h3 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
   margin: 0 0 10px;
   color: #ffffff;
-  line-height: 1.4;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .paper-card .info p {
-  font-size: 1em;
+  font-size: 0.92em;
   color: #bbbbbb;
   margin: 4px 0;
 }
@@ -142,38 +171,27 @@ main {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0.08);
   border: none;
   color: white;
-  font-size: 2em;
-  padding: 10px;
+  font-size: 1.8em;
+  padding: 8px 12px;
   cursor: pointer;
   border-radius: 50%;
   z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .arrow.left {
-  left: 0;
+  left: -30px;
 }
 
 .arrow.right {
-  right: 0;
-}
-
-#scrollToTopBtn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 10px 14px;
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  display: none;
-  z-index: 999;
+  right: -30px;
 }
 
 .modal {
@@ -213,28 +231,36 @@ main {
   cursor: pointer;
 }
 
+/* Responsive fix */
 @media (max-width: 1300px) {
   .carousel-frame {
     width: 100%;
-    padding: 0 20px;
+    padding: 0 10px;
   }
 
   .paper-card {
-    flex: 0 0 90%;
+    flex: 0 0 85%;
     height: auto;
   }
 
   .arrow {
-    top: 45%;
     font-size: 1.5em;
-    padding: 8px;
+    top: 45%;
   }
 
   header h1 {
-    font-size: 2em;
+    font-size: 2.2em;
   }
 
-  .publications h3 {
-    font-size: 1.6em;
+  header h2 {
+    font-size: 1.1em;
+  }
+
+  .paper-card .info h3 {
+    font-size: 0.95em;
+  }
+
+  .paper-card .info p {
+    font-size: 0.85em;
   }
 }
