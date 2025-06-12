@@ -4,11 +4,7 @@ const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
 const closeBtn = document.querySelector('.close-button');
 
-function openPDF(path) {
-  iframe.src = path;
-  modal.style.display = 'flex';
-}
-
+// Modal close behavior
 closeBtn.onclick = () => {
   modal.style.display = 'none';
   iframe.src = '';
@@ -21,6 +17,12 @@ window.onclick = (e) => {
   }
 };
 
+function openPDF(path) {
+  iframe.src = path;
+  modal.style.display = 'flex';
+}
+
+// Load papers
 async function loadPapers() {
   const response = await fetch('papers.json');
   const papers = await response.json();
@@ -71,7 +73,7 @@ async function loadPapers() {
     container.appendChild(card);
   }
 
-  // Animazione all'apparizione
+  // Animate on appear
   const cards = document.querySelectorAll('.paper-card');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -91,11 +93,27 @@ async function loadPapers() {
   });
 }
 
+// Carousel scroll buttons
 document.querySelector('.nav-arrow.left').addEventListener('click', () => {
   document.getElementById('carousel').scrollBy({ left: -400, behavior: 'smooth' });
 });
+
 document.querySelector('.nav-arrow.right').addEventListener('click', () => {
   document.getElementById('carousel').scrollBy({ left: 400, behavior: 'smooth' });
 });
 
+// Scroll to top button
+const topBtn = document.getElementById('scrollToTopBtn');
+window.onscroll = function () {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    topBtn.style.display = 'block';
+  } else {
+    topBtn.style.display = 'none';
+  }
+};
+topBtn.onclick = function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Init
 window.onload = loadPapers;

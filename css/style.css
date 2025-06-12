@@ -19,16 +19,15 @@ body {
 header {
   text-align: center;
   padding: 60px 20px 30px;
-  background-color: var(--bg-color);
 }
 
 header h1 {
-  font-size: 2.8em;
+  font-size: 3.2em;
   margin: 0;
 }
 
 header h2 {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: 400;
   color: #a0a0a0;
   margin-top: 12px;
@@ -55,6 +54,10 @@ header h2 {
   transition: background-color 0.3s ease;
 }
 
+.link-buttons a:hover {
+  background-color: var(--accent-hover);
+}
+
 .link-buttons img.icon {
   width: 20px;
   height: 20px;
@@ -62,12 +65,12 @@ header h2 {
 
 main {
   padding: 40px 20px;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
 .publications h3 {
-  font-size: 2em;
+  font-size: 2.4em;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -79,53 +82,64 @@ main {
 
 .carousel-container {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding: 10px 20px 40px;
+  padding: 20px 60px;
+  scrollbar-width: none;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
 }
 
 .paper-card {
   flex: 0 0 auto;
-  width: 260px;
-  height: 360px;
+  width: 300px;
+  height: 460px;
   background-color: var(--card-bg);
   border-radius: 16px;
   box-shadow: 0 6px 14px var(--shadow);
-  overflow: hidden;
   scroll-snap-align: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  cursor: pointer;
   opacity: 0;
   transform: translateY(20px);
 }
 
+.paper-card:hover {
+  background-color: var(--card-hover);
+}
+
 .paper-card .preview {
-  width: 40%;
-  height: 100%;
+  width: 100%;
+  height: 55%;
   object-fit: cover;
-  background-color: #151521;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .paper-card .info {
-  width: 60%;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-start;
+  flex-grow: 1;
 }
 
 .paper-card .info h3 {
   font-size: 1em;
   font-weight: 600;
-  margin: 0;
+  margin: 0 0 10px;
+  color: #ffffff;
+  line-height: 1.4;
 }
 
 .paper-card .info p {
-  font-size: 0.85em;
-  color: #cccccc;
+  font-size: 0.88em;
+  color: #bbbbbb;
   margin: 4px 0;
 }
 
@@ -136,10 +150,24 @@ main {
   background-color: rgba(255, 255, 255, 0.08);
   border: none;
   color: white;
-  font-size: 1.8em;
+  font-size: 2em;
   padding: 10px;
   cursor: pointer;
   border-radius: 50%;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.arrow.left {
+  left: 0;
+}
+
+.arrow.right {
+  right: 0;
 }
 
 #scrollToTopBtn {
@@ -153,6 +181,7 @@ main {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .modal {
