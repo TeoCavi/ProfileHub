@@ -23,12 +23,12 @@ header {
 }
 
 header h1 {
-  font-size: 3.2em;
+  font-size: 3.6em;
   margin: 0;
 }
 
 header h2 {
-  font-size: 1.4em;
+  font-size: 1.6em;
   font-weight: 400;
   color: #a0a0a0;
   margin-top: 12px;
@@ -82,16 +82,17 @@ main {
 }
 
 .carousel-frame {
-  width: 1280px; /* 2 cards (600px + 40px gap) + padding */
-  overflow: hidden;
+  width: 1280px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 
 .carousel-container {
   display: flex;
   gap: 40px;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
   padding: 0 10px;
+  min-width: max-content;
 }
 
 .paper-card {
@@ -124,7 +125,7 @@ main {
 }
 
 .paper-card .info h3 {
-  font-size: 1em;
+  font-size: 1.1em;
   font-weight: 600;
   margin: 0 0 10px;
   color: #ffffff;
@@ -132,7 +133,7 @@ main {
 }
 
 .paper-card .info p {
-  font-size: 0.9em;
+  font-size: 1em;
   color: #bbbbbb;
   margin: 4px 0;
 }
