@@ -85,16 +85,15 @@ input[type=radio] {
 
 .cards {
   position: relative;
-  width: 100%;
-  height: 1120px; /* A4 aspect ratio height */
-  max-width: 800px;
-  margin-bottom: 20px;
+  width: 595px;
+  height: 842px;
+  margin-bottom: 12px;
 }
 
 .card {
   position: absolute;
-  width: 595px; /* A4 width in pixels at 72dpi */
-  height: 842px; /* A4 height in pixels at 72dpi */
+  width: 595px;
+  height: 842px;
   left: 0;
   right: 0;
   margin: auto;
@@ -141,10 +140,11 @@ input[type=radio] {
   background-color: #1e1e2f;
   border-radius: 12px;
   padding: 20px;
-  width: 595px; /* Same as A4 width */
+  width: 595px;
   max-width: 100%;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  margin-top: -10px;
 }
 
 .song-info {
@@ -166,8 +166,8 @@ input#item-3:checked ~ .player #song-info-3 {
 
 .sub-line {
   display: flex;
-  justify-content: center;
-  gap: 6px;
+  flex-direction: column;
+  align-items: center;
   font-size: 0.95rem;
   color: #bbb;
   margin-bottom: 6px;
@@ -233,12 +233,8 @@ input#item-3:checked ~ .player #song-info-3 {
 }
 
 @media (max-width: 768px) {
-  .card {
+  .cards, .card, .player {
     width: 90vw;
     height: auto;
-  }
-
-  .player {
-    width: 90vw;
   }
 }
