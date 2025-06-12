@@ -14,6 +14,7 @@ body {
   font-family: var(--font-main);
   background-color: var(--bg-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
 header {
@@ -22,7 +23,7 @@ header {
 }
 
 header h1 {
-  font-size: 3.4em;
+  font-size: 3.2em;
   margin: 0;
 }
 
@@ -65,12 +66,12 @@ header h2 {
 
 main {
   padding: 40px 20px;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
 .publications h3 {
-  font-size: 2.6em;
+  font-size: 2.4em;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -86,7 +87,7 @@ main {
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding: 30px 80px;
+  padding: 20px 80px;
   scrollbar-width: none;
 }
 
@@ -95,10 +96,9 @@ main {
 }
 
 .paper-card {
-  flex: 0 0 auto;
-  width: 46%;
-  max-width: 600px;
-  height: 520px;
+  flex: 0 0 calc(50% - 40px);
+  max-width: calc(50% - 40px);
+  height: 480px;
   background-color: var(--card-bg);
   border-radius: 16px;
   box-shadow: 0 6px 14px var(--shadow);
@@ -117,14 +117,14 @@ main {
 
 .paper-card .preview {
   width: 100%;
-  height: 58%;
+  height: 55%;
   object-fit: cover;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
 }
 
 .paper-card .info {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -132,15 +132,15 @@ main {
 }
 
 .paper-card .info h3 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: #ffffff;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .paper-card .info p {
-  font-size: 0.95em;
+  font-size: 0.9em;
   color: #bbbbbb;
   margin: 4px 0;
 }
@@ -152,16 +152,12 @@ main {
   background-color: rgba(255, 255, 255, 0.08);
   border: none;
   color: white;
-  font-size: 2.4em;
-  padding: 12px 16px;
+  font-size: 2em;
+  padding: 10px;
   cursor: pointer;
   border-radius: 50%;
   transition: background-color 0.3s;
-  z-index: 10;
-}
-
-.arrow:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 5;
 }
 
 .arrow.left {
@@ -170,6 +166,10 @@ main {
 
 .arrow.right {
   right: 10px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 #scrollToTopBtn {
@@ -198,9 +198,7 @@ main {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-
 .modal-content {
-  position: relative;
   margin: 5vh auto;
   background: var(--card-bg);
   width: 90%;
@@ -226,4 +224,39 @@ main {
   font-size: 1.5em;
   padding: 10px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2em;
+  }
+
+  .publications h3 {
+    font-size: 1.6em;
+  }
+
+  .paper-card {
+    flex: 0 0 90%;
+    max-width: 90%;
+    height: auto;
+  }
+
+  .paper-card .info h3 {
+    font-size: 0.95em;
+  }
+
+  .paper-card .info p {
+    font-size: 0.8em;
+  }
+
+  .carousel-container {
+    padding: 10px 20px;
+    gap: 20px;
+  }
+
+  .arrow {
+    font-size: 1.6em;
+    padding: 8px;
+    top: 40%;
+  }
 }
