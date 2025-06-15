@@ -292,12 +292,26 @@ h2 {
 
 @media screen and (max-width: 768px) {
   .cards {
-    height: calc(90vw * 1.42);
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
   }
 
   .card {
-    max-width: 90vw;
+    position: relative;
+    flex: 0 0 80%; /* 80% della larghezza dello schermo */
+    max-width: 80%;
+    height: auto;
+    scroll-snap-align: center;
+    transform: none !important; /* evita eventuali trasformazioni del carosello desktop */
   }
+}
 
   .player {
     width: 90vw;
