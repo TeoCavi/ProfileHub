@@ -1,5 +1,3 @@
-// script.js
-
 const apiBase = "https://teocavi-profilehub-bk.hf.space";
 const modal = document.getElementById('pdf-modal');
 const iframe = document.getElementById('pdf-frame');
@@ -105,12 +103,16 @@ function updateCard(i, title, journal, year, doi) {
 
 function renderCarousel() {
   const n = papers.length;
+
+  // Reset tutte le card
   for (let i = 0; i < n; i++) {
     const card = document.getElementById(`song-${i}`);
     card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
     card.style.zIndex = '-1';
     card.style.opacity = '0';
     card.style.pointerEvents = 'none';
+
+    // Memorizza la trasformazione base come translate + scale
     card.dataset.baseTransform = 'translateX(0%) scale(0.8)';
     card.style.transform = card.dataset.baseTransform;
   }
@@ -118,6 +120,7 @@ function renderCarousel() {
   const leftIndex = (currentIndex - 1 + n) % n;
   const rightIndex = (currentIndex + 1) % n;
 
+  // Card centrale
   const centerCard = document.getElementById(`song-${currentIndex}`);
   centerCard.dataset.baseTransform = 'translateX(0) scale(1)';
   centerCard.style.transform = centerCard.dataset.baseTransform;
@@ -125,6 +128,7 @@ function renderCarousel() {
   centerCard.style.zIndex = '2';
   centerCard.style.pointerEvents = 'auto';
 
+  // Card sinistra (entra dietro)
   const leftCard = document.getElementById(`song-${leftIndex}`);
   leftCard.dataset.baseTransform = 'translateX(-40%) scale(0.8)';
   leftCard.style.transform = leftCard.dataset.baseTransform;
@@ -132,6 +136,7 @@ function renderCarousel() {
   leftCard.style.zIndex = '1';
   leftCard.style.pointerEvents = 'auto';
 
+  // Card destra (entra dietro)
   const rightCard = document.getElementById(`song-${rightIndex}`);
   rightCard.dataset.baseTransform = 'translateX(40%) scale(0.8)';
   rightCard.style.transform = rightCard.dataset.baseTransform;
@@ -139,11 +144,17 @@ function renderCarousel() {
   rightCard.style.zIndex = '1';
   rightCard.style.pointerEvents = 'auto';
 
-  document.querySelectorAll('.song-info').forEach(info => info.style.display = 'none');
+  // Nasconde tutte le info
+  const infos = document.querySelectorAll('.song-info');
+  infos.forEach(info => info.style.display = 'none');
+
+  // Mostra info attiva
   const activeInfo = document.getElementById(`song-info-${currentIndex}`);
   if (activeInfo) activeInfo.style.display = 'block';
+
   lastIndex = currentIndex;
 }
+
 
 function onCardClick(i) {
   const n = papers.length;
@@ -154,8 +165,12 @@ function onCardClick(i) {
   } else {
     const rightIndex = (currentIndex + 1) % n;
     const leftIndex = (currentIndex - 1 + n) % n;
-    if (i === rightIndex) currentIndex = rightIndex;
-    else if (i === leftIndex) currentIndex = leftIndex;
+
+    if (i === rightIndex) {
+      currentIndex = rightIndex;
+    } else if (i === leftIndex) {
+      currentIndex = leftIndex;
+    }
     renderCarousel();
   }
 }
@@ -170,20 +185,32 @@ function attachCardHoverEffect() {
       const y = e.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
+
+      // Calcolo rotazione
       const rotateY = ((x - centerX) / centerX) * 15;
       const rotateX = -((y - centerY) / centerY) * 15;
       const base = card.dataset.baseTransform || '';
       card.style.transform = `${base} rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-      card.style.setProperty('--x', `${(x / rect.width) * 100}%`);
-      card.style.setProperty('--y', `${(y / rect.height) * 100}%`);
+
+      // Calcolo coordinate per il riflesso (da 0% a 100%)
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
+
+      // Aggiorna variabili CSS per il riflesso
+      card.style.setProperty('--x', `${xPercent}%`);
+      card.style.setProperty('--y', `${yPercent}%`);
+
       card.style.zIndex = card.id === `song-${currentIndex}` ? '2' : '1';
     });
 
     card.addEventListener('mouseleave', () => {
       const base = card.dataset.baseTransform || '';
       card.style.transform = base;
+
+      // Reset posizione riflesso al centro
       card.style.setProperty('--x', `50%`);
       card.style.setProperty('--y', `50%`);
+
       card.style.zIndex = card.id === `song-${currentIndex}` ? '2' : '1';
     });
   });
@@ -195,55 +222,67 @@ function attachHoverEffect(selector) {
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      el.style.setProperty('--x', `${(x / rect.width) * 100}%`);
-      el.style.setProperty('--y', `${(y / rect.height) * 100}%`);
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
+      el.style.setProperty('--x', `${xPercent}%`);
+      el.style.setProperty('--y', `${yPercent}%`);
     });
+
     el.addEventListener('mouseleave', () => {
       el.style.setProperty('--x', `50%`);
       el.style.setProperty('--y', `50%`);
     });
   });
 }
-
 function attachDOILinksHandler() {
   document.querySelectorAll('.doi a').forEach(link => {
     link.addEventListener('click', e => e.stopPropagation());
   });
 }
 
-function handleScroll() {
-  const containerRect = cardsContainer.getBoundingClientRect();
-  const centerX = containerRect.left + containerRect.width / 2;
-  let minDiff = Infinity;
-  let closestIndex = currentIndex;
-
-  papers.forEach((_, i) => {
-    const card = document.getElementById(`song-${i}`);
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const cardCenter = rect.left + rect.width / 2;
-    const diff = Math.abs(cardCenter - centerX);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closestIndex = i;
-    }
-  });
-
-  if (closestIndex !== currentIndex) {
-    currentIndex = closestIndex;
-    renderCarousel();
-  }
-}
-
+// Swipe touch support
 window.onload = () => {
   loadPapers();
   attachHoverEffect('.link-buttons a');
   attachHoverEffect('.player');
 
-  cardsContainer.addEventListener('scroll', handleScroll);
+  let startX = 0;
+  let startY = 0;
+
+  cardsContainer.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  cardsContainer.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+
+    const threshold = 50;
+
+    // Se lo swipe è più verticale che orizzontale, permetti lo scroll
+    if (Math.abs(diffY) > Math.abs(diffX)) {
+      return;
+    }
+
+    // Swipe a destra (precedente)
+    if (diffX > threshold) {
+      currentIndex = (currentIndex - 1 + papers.length) % papers.length;
+      renderCarousel();
+    }
+    // Swipe a sinistra (successivo)
+    else if (diffX < -threshold) {
+      currentIndex = (currentIndex + 1) % papers.length;
+      renderCarousel();
+    }
+  });
 
   player.addEventListener('click', () => {
     const activeCardLabel = document.getElementById(`song-${currentIndex}`);
-    if (activeCardLabel) activeCardLabel.click();
+    if (activeCardLabel) {
+      activeCardLabel.click();
+    }
   });
 };

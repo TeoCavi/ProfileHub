@@ -292,26 +292,11 @@ h2 {
 
 @media screen and (max-width: 768px) {
   .cards {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 16px;
-    height: auto;
-    padding-bottom: 20px;
+    height: calc(90vw * 1.42);
   }
 
   .card {
-    position: relative !important;
-    flex: 0 0 90%;
-    max-width: 90%;
-    height: auto;
-    scroll-snap-align: center;
-    transform: none !important;
-    opacity: 1 !important;
-    z-index: 1 !important;
-    pointer-events: auto !important;
+    max-width: 90vw;
   }
 
   .player {
