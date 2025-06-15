@@ -257,25 +257,25 @@ window.onload = () => {
   cardsContainer.addEventListener('touchend', e => {
     const endX = e.changedTouches[0].clientX;
     const endY = e.changedTouches[0].clientY;
+
     const diffX = endX - startX;
     const diffY = endY - startY;
 
-    const threshold = 50;
+    const threshold = 30; // soglia minima per rilevare swipe orizzontale
 
-    // Se lo swipe è più verticale che orizzontale, permetti lo scroll
-    if (Math.abs(diffY) > Math.abs(diffX)) {
-      return;
-    }
+    // Ignora se swipe è principalmente verticale
+    if (Math.abs(diffY) > Math.abs(diffX)) return;
 
-    // Swipe a destra (precedente)
+    // Swipe a destra (simula click sulla card sinistra)
     if (diffX > threshold) {
-      currentIndex = (currentIndex - 1 + papers.length) % papers.length;
-      renderCarousel();
+      const leftIndex = (currentIndex - 1 + papers.length) % papers.length;
+      onCardClick(leftIndex);
     }
-    // Swipe a sinistra (successivo)
-    else if (diffX < -threshold) {
-      currentIndex = (currentIndex + 1) % papers.length;
-      renderCarousel();
+
+    // Swipe a sinistra (simula click sulla card destra)
+    if (diffX < -threshold) {
+      const rightIndex = (currentIndex + 1) % papers.length;
+      onCardClick(rightIndex);
     }
   });
 
