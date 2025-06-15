@@ -12,12 +12,12 @@ let currentIndex = 0;
 let lastIndex = 0;
 
 function openPDF(path) {
-  // Se il path è assoluto (es. inizia con http o /), lo usiamo così com'è
   const isAbsolute = /^(https?:\/\/|\/)/i.test(path);
-  const fileParam = isAbsolute ? path : `/${path}`;  // aggiunge / solo se serve
-
+  const fileParam = isAbsolute ? path : `/${path}`;
   const viewerUrl = `/assets/pdfjs/web/viewer.html?file=${encodeURIComponent(fileParam)}`;
-  
+
+  console.log('🔗 Viewer URL:', viewerUrl);
+
   const iframe = document.getElementById('pdf-frame');
   const modal = document.getElementById('pdf-modal');
 
@@ -27,6 +27,9 @@ function openPDF(path) {
 }
 
 function closeModal() {
+  const iframe = document.getElementById('pdf-frame');
+  const modal = document.getElementById('pdf-modal');
+
   modal.style.display = 'none';
   iframe.src = '';
 }
