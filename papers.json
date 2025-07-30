@@ -1,0 +1,30 @@
+[
+  {
+    "doi": "10.1016/j.compbiomed.2025.110530",
+    "pdf": "assets/papers/D2-RD-UNet.pdf",
+    "preview": "assets/previews/D2-RD-UNet.png"
+  },
+  {
+    "doi": "10.1016/j.compmedimag.2024.102434",
+    "pdf": "assets/papers/Pancreas_Dataset.pdf",
+    "preview": "assets/previews/Pancreas_Dataset.png"
+  },
+  {
+    "doi": "10.1007/s10462-024-11050-4",
+    "pdf": "assets/papers/Systematic_Review.pdf",
+    "preview": "assets/previews/Systematic_Review.png"
+  },
+  {
+    "doi": "10.48550/arXiv.2506.10825",
+    "pdf": "assets/papers/Survey_Generalist.pdf",
+    "preview": "assets/previews/Survey_Generalist.png",
+    "title": "Generalist Models in Medical Image Segmentation: A Survey and Performance Comparison with Task-Specific Approaches",
+    "journal": "arXiv",
+    "year": "2025"
+  },
+  {
+    "doi": "10.3390/s21030814",
+    "pdf": "assets/papers/Wearable_Review.pdf",
+    "preview": "assets/previews/Wearable_Review.png"
+  }
+]

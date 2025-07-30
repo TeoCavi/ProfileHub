@@ -1,0 +1,19 @@
+
+{
+  "en": {
+    "name": "Matteo Cavicchioli",
+    "role": "Biomedical Engineer & AI Specialist",
+    "description": "Biomedical engineer with a strong foundation in AI, electronics, and physiological signal analysis. Currently completing a PhD at Politecnico di Milano, where I develop AI-driven solutions for advanced 3D anatomical reconstruction with real-world clinical applications. <br><br>I combine technical expertise with a practical mindset, working at the intersection of healthcare, technology, and innovation. My work has directly contributed to the creation and early-stage funding of a med-tech startup, bridging academic research and industrial value. <br><br>Experienced in working across functions with clinicians, engineers, and business teams, I thrive in dynamic environments where complex problems require both analytical depth and strategic execution. Passionate about translating cutting-edge research into impactful solutions that improve healthcare delivery and patient outcomes.",
+    "cv_path": "assets/profile/cv_2025_en",
+    "image": "assets/profile/profilenobk.png",
+    "highlights": ["AI-driven", "Startup-minded", "3D Segmentation", "Multimodal data", "Clinical applications"]
+  },
+  "it": {
+    "name": "Matteo Cavicchioli",
+    "role": "Ingegnere Biomedico e Specialista in IA",
+    "description": "Sono un ingegnere biomedico con competenze in intelligenza artificiale, elettronica e analisi dei segnali fisiologici. Sto completando un dottorato di ricerca al Politecnico di Milano, dove lavoro allo sviluppo di tecnologie basate su AI per ricostruire in 3D organi addominali, tumori e vasi sanguigni, creando dei veri e propri “gemelli digitali” utili in ambito clinico.<br><br>Nel mio percorso unisco conoscenze tecniche a un approccio concreto, lavorando tra medicina, tecnologia e innovazione. Il mio lavoro ha avuto un ruolo diretto nella nascita e nel primo finanziamento di una startup nel settore medico-tecnologico, aiutando a trasformare la ricerca accademica in soluzioni utili per l’industria.<br><br>Collaboro ogni giorno con medici, ingegneri e professionisti del mondo aziendale, e mi trovo a mio agio in ambienti dinamici, dove servono sia capacità analitiche che visione strategica. Sono motivato dall’idea di portare la ricerca più avanzata a migliorare davvero la cura dei pazienti e l’efficienza del sistema sanitario.",
+    "cv_path": "assets/profile/cv_2025_it",
+    "image": "assets/profile/profilenobk.png",
+    "highlights": ["AI e Ricerca", "Mentalità da Startup", "Segmentazione 3D", "Dati Multimodali", "Applicazioni Cliniche"]
+  }
+}

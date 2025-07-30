@@ -1,0 +1,16 @@
+{
+  "en": {
+    "profileTitle": "Profile",
+    "viewCV": "View CV",
+    "projects": "Projects",
+    "publications": "Scientific Publications",
+    "scrollTop": "Top"
+  },
+  "it": {
+    "profileTitle": "Profilo",
+    "viewCV": "Visualizza CV",
+    "projects": "Progetti",
+    "publications": "Pubblicazioni Scientifiche",
+    "scrollTop": "Inizio"
+  }
+}

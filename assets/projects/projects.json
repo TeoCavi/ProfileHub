@@ -1,0 +1,30 @@
+[
+  {
+    "title": {
+      "en": "Pancreas Segmentation",
+      "it": "Segmentazione del Pancreas"
+    },
+    "media": "assets/projects/pancreas_video.mp4",
+    "description": {
+      "en": "A pipeline to segment the pancreas from CT images using 3D U-Net architectures.",
+      "it": "Una pipeline per segmentare il pancreas da immagini TC usando architetture 3D U-Net."
+    }
+  },
+  {
+    "title": {
+      "en": "Liver Vessel Analysis",
+      "it": "Analisi dei Vasi Epatrici"
+    },
+    "media": [
+      {
+        "file": "assets/projects/FinalBaseMesh.obj",
+        "color": "#1f77b4",
+        "label": "Human"
+      }
+    ],
+    "description": {
+      "en": "A multimodal deep learning approach to classify hepatic vessel types and assist surgical planning.",
+      "it": "Un approccio multimodale per classificare i vasi epatici e supportare la pianificazione chirurgica."
+    }
+  }
+]
