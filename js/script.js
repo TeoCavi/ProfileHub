@@ -161,6 +161,7 @@ function updateCard(i, title, journal, year, doi) {
 
 function renderCarousel() {
   const n = papers.length;
+  const isMobile = window.innerWidth < 768;
 
   // Reset tutte le card
   for (let i = 0; i < n; i++) {
@@ -169,8 +170,6 @@ function renderCarousel() {
     card.style.zIndex = '-1';
     card.style.opacity = '0';
     card.style.pointerEvents = 'none';
-
-    // Memorizza la trasformazione base come translate + scale
     card.dataset.baseTransform = 'translateX(0%) scale(0.8)';
     card.style.transform = card.dataset.baseTransform;
   }
@@ -178,25 +177,28 @@ function renderCarousel() {
   const leftIndex = (currentIndex - 1 + n) % n;
   const rightIndex = (currentIndex + 1) % n;
 
-  // Card centrale
+  // Center card - mobile zoom 110%, desktop 100%
+  const centerScale = isMobile ? 'scale(1.2)' : 'scale(1)';
   const centerCard = document.getElementById(`song-${currentIndex}`);
-  centerCard.dataset.baseTransform = 'translateX(0) scale(1)';
+  centerCard.dataset.baseTransform = `translateX(0) ${centerScale}`;
   centerCard.style.transform = centerCard.dataset.baseTransform;
   centerCard.style.opacity = '1';
   centerCard.style.zIndex = '2';
   centerCard.style.pointerEvents = 'auto';
 
-  // Card sinistra (entra dietro)
+  // Left & right cards
+  const leftTransform = isMobile ? 'translateX(-25%) scale(1)' : 'translateX(-30%) scale(0.8)';
+  const rightTransform = isMobile ? 'translateX(25%) scale(1)' : 'translateX(30%) scale(0.8)';
+
   const leftCard = document.getElementById(`song-${leftIndex}`);
-  leftCard.dataset.baseTransform = 'translateX(-30%) scale(0.8)';
+  leftCard.dataset.baseTransform = leftTransform;
   leftCard.style.transform = leftCard.dataset.baseTransform;
   leftCard.style.opacity = '0.4';
   leftCard.style.zIndex = '1';
   leftCard.style.pointerEvents = 'auto';
 
-  // Card destra (entra dietro)
   const rightCard = document.getElementById(`song-${rightIndex}`);
-  rightCard.dataset.baseTransform = 'translateX(30%) scale(0.8)';
+  rightCard.dataset.baseTransform = rightTransform;
   rightCard.style.transform = rightCard.dataset.baseTransform;
   rightCard.style.opacity = '0.4';
   rightCard.style.zIndex = '1';
@@ -212,7 +214,6 @@ function renderCarousel() {
 
   lastIndex = currentIndex;
 }
-
 
 function onCardClick(i) {
   const n = papers.length;

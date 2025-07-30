@@ -434,10 +434,10 @@ body.on .social-btn .icon {
   transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
-  background: radial-gradient(circle, rgba(71, 224, 192, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
   pointer-events: none;
-  opacity: 0; /* ← Parte invisibile */
-  transition: top 0.05s, left 0.05s, opacity 0.3s ease;
+  opacity: 0;
+  transition: top 0.05s, left 0.05s, opacity 0.3s ease, background 0.3s ease;
   z-index: 0;
   mix-blend-mode: screen;
   cursor: default;
@@ -445,7 +445,10 @@ body.on .social-btn .icon {
 
 .profile-about.hovering::before {
   opacity: 1;
-  cursor: default;
+}
+
+body.on .profile-about::before {
+  background: radial-gradient(circle, rgba(255, 255, 0, 0.35) 0%, transparent 70%);
 }
 
 .profile-about h2 {
@@ -1591,6 +1594,25 @@ h3 {
     padding-right: 1rem;
   }
 
+
+  .pub-title{
+    margin-bottom: 1.5rem;
+  }
+
+  .cards {
+    width: calc(var(--content-width) * 0.60);
+    max-width: var(--content-width);
+    position: relative;
+    height: calc(calc(var(--content-width) * 0.60) * 1.41);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .player {
+    margin-top: 4rem;
+  }
 
 
   .info-area {
