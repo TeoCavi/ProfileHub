@@ -502,10 +502,16 @@ async function loadProjectSection() {
 
       const isArray = Array.isArray(proj.media);
       const isString = typeof proj.media === 'string';
+
+      // Tipi singoli
       const isVideo = isString && proj.media.endsWith('.mp4');
-      const isSingleObj = isString && proj.media.endsWith('.obj');
-      const isMultiObj = isArray && proj.media.length > 0 && proj.media[0].file && proj.media[0].file.endsWith('.obj');
       const isImage = isString && /\.(jpg|jpeg|png|webp|gif)$/i.test(proj.media);
+      const isSingleObj = isString && /\.(obj|ply)$/i.test(proj.media);
+
+      // Tipi multipli (obj o ply)
+      const isMultiObj = isArray && proj.media.length > 0 &&
+        typeof proj.media[0].file === 'string' &&
+        /\.(obj|ply)$/i.test(proj.media[0].file);
 
       if (isVideo) {
         media.innerHTML = `<video src="${proj.media}" controls></video>`;
@@ -622,9 +628,9 @@ function createViewerControls(viewerId) {
   controls.className = 'viewer-controls';
   controls.innerHTML = `
     <div class="viewer-row">
-      <button class="axial" onclick="setView('axial', '${viewerId}')" title="Axial View">A</button>
-      <button class="coronal" onclick="setView('coronal', '${viewerId}')" title="Coronal View">C</button>
-      <button class="sagittal" onclick="setView('sagittal', '${viewerId}')" title="Sagittal View">S</button>
+      <button class="anterior" onclick="setView('anterior', '${viewerId}')" title="Anterior View">A</button>
+      <button class="superior" onclick="setView('superior', '${viewerId}')" title="Superior View">S</button>
+      <button class="operative" onclick="setView('operative', '${viewerId}')" title="Operative View">O</button>
       <button class="rotate" onclick="toggleRotation('${viewerId}')" title="Rotate"><i class="fas fa-sync-alt"></i></button>
       <button class="reset" onclick="resetView('${viewerId}')" title="Reset View"><i class="fas fa-crosshairs"></i></button>
       <button class="zoom-out" onclick="zoom('${viewerId}', -1)" title="Zoom Out"><i class="fas fa-magnifying-glass-minus"></i></button>

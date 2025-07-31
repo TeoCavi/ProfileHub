@@ -1,30 +1,43 @@
 [
   {
     "title": {
-      "en": "Pancreas Segmentation",
-      "it": "Segmentazione del Pancreas"
+      "en": "dsMRI Vocal Tract Segmentation",
+      "it": "Segmentazione del Tratto Vocale con dsMRI"
     },
-    "media": "assets/projects/pancreas_video.mp4",
+    "media": "assets/projects/dsMRI.mp4",
     "description": {
-      "en": "A pipeline to segment the pancreas from CT images using 3D U-Net architectures.",
-      "it": "Una pipeline per segmentare il pancreas da immagini TC usando architetture 3D U-Net."
+      "en": "In collaboration with the University of California San Francisco (UCSF), this project developed an automatic segmentation system for the vocal tract from dynamic speech MRI (dsMRI) during speech production, aimed at supporting the diagnosis of motor disorders in neurodegenerative diseases (nfvPPA, apraxia, dysarthria). Deep neural networks (UNet and variants) were used to identify the main articulators. Manually annotated data were used to train the models and extract quantitative articulatory metrics with interactive visualization.",
+      "it": "In collaborazione con l’University of California San Francisco (UCSF), il progetto ha sviluppato un sistema di segmentazione automatica del tratto vocale da risonanza magnetica dinamica (dsMRI) durante la produzione del linguaggio, con l’obiettivo di supportare la diagnosi di disturbi motori legati a patologie neurodegenerative (nfvPPA, aprassia, disartria). Reti neurali profonde (UNet e varianti) hanno permesso di identificare automaticamente gli articolatori principali. Le annotazioni manuali sono state usate per addestrare i modelli e ottenere metriche quantitative del movimento articolatorio, visualizzabili interattivamente."
     }
   },
   {
     "title": {
-      "en": "Liver Vessel Analysis",
-      "it": "Analisi dei Vasi Epatrici"
+      "en": "AI Liver Vessel Reconstruction",
+      "it": "Ricostruzione dei Vasi Epatici con IA"
     },
     "media": [
       {
-        "file": "assets/projects/FinalBaseMesh.obj",
-        "color": "#1f77b4",
-        "label": "Human"
+        "file": "assets/projects/IR_01/287.ply",
+        "color": "#3afcff",
+        "label": "Hepatic Vessels",
+        "visible": true
+      },
+      {
+        "file": "assets/projects/IR_01/306.ply",
+        "color": "#b593ff",
+        "label": "Portal Vessels",
+        "visible": true
+      },
+      {
+        "file": "assets/projects/IR_01/mass.ply",
+        "color": "#2fff00",
+        "label": "Tumor",
+        "visible": true
       }
     ],
     "description": {
-      "en": "A multimodal deep learning approach to classify hepatic vessel types and assist surgical planning.",
-      "it": "Un approccio multimodale per classificare i vasi epatici e supportare la pianificazione chirurgica."
+      "en": "During my PhD, I developed a pipeline for 3D segmentation and reconstruction of hepatic vessels from CT images, distinguishing between portal and suprahepatic vessels. The workflow combines deep learning for multiclass segmentation with post-processing steps for centerline extraction and vascular modeling. The 3D scene displays the outcome of this pipeline, with an interactive, rotatable view of the vascular tree, allowing exploration of anatomical complexity and supporting surgical planning applications.",
+      "it": "Durante il dottorato, ho sviluppato un pipeline per la segmentazione e la ricostruzione 3D dei vasi epatici da immagini TC, distinguendo tra vasi portali e sovraepatici. Il processo include metodi deep learning per la segmentazione multiclass e tecniche di post-processing per l’estrazione delle centerline e la ricostruzione dei modelli vascolari. La scena 3D mostra il risultato di questa pipeline, con una visualizzazione interattiva e ruotabile dell’albero vascolare, utile per esplorare la complessità anatomica e supportare applicazioni di pianificazione chirurgica."
     }
   }
 ]
